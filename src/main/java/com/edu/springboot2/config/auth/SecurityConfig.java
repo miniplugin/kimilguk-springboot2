@@ -2,9 +2,12 @@ package com.edu.springboot2.config.auth;
 
 import com.edu.springboot2.domain.user.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -32,5 +35,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
 
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("admin").password(passwordEncoder().encode("1234")).roles("ADMIN")
+                .and()
+                .withUser("user").password(passwordEncoder().encode("1234")).roles("USER")
+                .and()
+                .withUser("guest").password(passwordEncoder().encode("guest")).roles("GUEST");
+    }
+
+    // passwordEncoder() 추가
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
