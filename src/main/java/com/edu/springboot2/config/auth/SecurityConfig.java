@@ -16,11 +16,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable().headers().frameOptions().disable().and()
                 .authorizeRequests()
+                .antMatchers("/login").permitAll()//추가
                 .antMatchers("/","/css/**","/images/**","/js/**","/h2-console/**", "/profile").permitAll()
                 .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                 //.antMatchers("/api/v1/**").hasRole("USER")
                 //.antMatchers("/api/v1/**").permitAll()
                 .anyRequest().authenticated()
+                .and()//추가
+                .oauth2Login().loginPage("/login")//추가
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")

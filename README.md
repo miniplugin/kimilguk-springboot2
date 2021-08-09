@@ -31,9 +31,15 @@
 - 스프링레거시 폴더구조: roo최상위 > [controller, dao(src/main/reousrces/mappers쿼리), service, vo 등]
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
-### 20210809(월) 작업예정
-- 네이버로그인 말고, 일반 회원 로그인 기능 추가
+### 20210810(화) 작업예정
+- /login 기존 자동 생성된 소스를 개발자가 커스터마이징 해서 생성하기.
 - 일반회원 등록 기능 추가(admin 관리자 ROLE_ADMIN 권한 추가)
+- mustache 템플릿은 앱을 리스타트 해야지만 적용이 됩니다.
+
+### 20210809(월) 작업
+- 네이버로그인 말고, 일반 회원 로그인 기능 추가
+- /login 기존 자동 생성된 소스를 개발자가 커스터마이징 해서 생성하기.(참조:  http://yoonbumtae.com/?p=2872)
+- http://yoonbumtae.com/?p=764
 
 ### 20210808(일) 작업
 - [05] 4. 세션 저장소로 데이터베이스 사용하기
