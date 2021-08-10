@@ -4,11 +4,14 @@ import com.edu.springboot2.domain.user.Role;
 import com.edu.springboot2.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 @Getter
 public class OAuthAttributes {
+    private static final Logger logger = LoggerFactory.getLogger(OAuthAttributes.class);
     private Map<String, Object> attributes;
     private String nameAttributeKey;
     private String name;
@@ -25,7 +28,7 @@ public class OAuthAttributes {
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
-        System.out.println("registration="+registrationId);
+        logger.info("registration="+registrationId);
         if("naver".equals(registrationId)){
             return ofNaver("id", attributes);
         } else if("kakao".equals(registrationId)){

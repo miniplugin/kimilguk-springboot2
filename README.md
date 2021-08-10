@@ -25,22 +25,51 @@
 - DTO(Data Transfer Object)클래스 : 스프링레거시의 VO와 같이 데이터 전송 임시 저장소로 Get/Set 역할을함.
 - Mustache(머스테치)템플릿 : 템플릿 코드(예, {{userName}})로 자바 변수와 객체를 사용함.(JSTL과 타임리프,타일즈 대신사용)
 - 작업순서예, 1. Requet 데이터임시저장 Dto, 2. API 요청을 받을 Controller, 3.서비스로 DAO호출, 4. 도메인작업(엔티티+레포지토리인터페이스)
+- mustache 템플릿은 앱을 리스타트 해야지만 적용이 됩니다.
 
 ### 스프링 레거시와 스프링부트의 폴더 구조차이
 - 스프링레거시 폴더구조:  [pom.xml], [WEB-INF>web.xml],[WEB-INF>spring>root-context.xml,WEB-INF>appServlet>servlet-context.xml]
 - 스프링레거시 폴더구조: roo최상위 > [controller, dao(src/main/reousrces/mappers쿼리), service, vo 등]
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
-### 20210810(화) 작업예정
+### 20210811(수) 작업예정
+- Spring Boot: 시큐리티(Security) – 3 – 로그인 및 권한 정보를 DB에서 가져오기
+- 회원 DB 에서 로그인 연동하기 : http://yoonbumtae.com/?p=1202
+- 일반회원 등록 기능 추가(admin 관리자 ROLE_ADMIN 권한 추가)
+
+### 20210810(화) 작업
+- 로깅레벌 설정: https://programmer93.tistory.com/46
+- TRACE  <  DEBUG  <  INFO  <  WARN  <  ERROR
+- 예를 들어 로깅 레벨 설정을 "INFO"로 하였을 경우 "TRACE", "DEBUG" 레벨은 무시한다.
+- private: 다른 클래스에서 사용하지 못하도록.
+- static: 인스턴스당 하나만 사용하겠다고 명시.
+- final: 내용을 변경하지 않겠다고 명시. 
 - Spring Boot: 시큐리티(Security) – 2 – 커스텀 로그인 페이지 만들기 참조: http://yoonbumtae.com/?p=1184
 - /login 기존 자동 생성된 소스를 개발자가 커스터마이징 해서 생성하기 마무리.
-- 일반회원 등록 기능 추가(admin 관리자 ROLE_ADMIN 권한 추가)
-- mustache 템플릿은 앱을 리스타트 해야지만 적용이 됩니다.
+- SecurityConfig 클래스에 폼로그인 메서드 추가: formLogin() 
+- indexController 클래스에 추가: if(user == null && principal != null) { //일반 로그인 일때 세션 저장
+- 빌더형 생성자 메서드에 데이터를 입력하는 방법(Serializable 사용안함. 아래처럼 메서드를 체이닝 사용)
+```java
+//User user_local = new User(userName,"","",Role.USER);//Serializable 에러
+/*
+User user_local = User.builder()
+        .name(userName)
+        .email("")
+        .picture("")
+        .role(Role.USER)
+        .build();
+ */
+```
+- 일반 로그인 성공: 메모리 인증 사용
+- 위 작업을 컨트롤러에서 LoginUserArgumentResolver.java 로 변경 = 공통코드 처리: 기술참조(아래)
+- http://chomman.github.io/blog/spring%20framework/spring-security%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-%EC%82%AC%EC%9A%A9%EC%9E%90%EC%9D%98-%EC%A0%95%EB%B3%B4%EB%A5%BC-%EC%B0%BE%EB%8A%94-%EB%B0%A9%EB%B2%95/
 
 ### 20210809(월) 작업
+- Spring Boot: 시큐리티(Security) – 1 참조: http://yoonbumtae.com/?p=764
 - 네이버로그인 말고, 일반 회원 로그인 기능 추가
 - /login 기존 자동 생성된 소스를 개발자가 커스터마이징 해서 생성하기.(참조:  http://yoonbumtae.com/?p=2872)
-- Spring Boot: 시큐리티(Security) – 1 참조: http://yoonbumtae.com/?p=764
+- SecurityConfig.java 에서 http는 내장된 대다수의 메서드들이 http 객체 자신을 반환하기 때문에 
+- 제이쿼리의 처럼 메서드를 체이닝 하여 사용할 수 있습니다.
 
 ### 20210808(일) 작업
 - [05] 4. 세션 저장소로 데이터베이스 사용하기

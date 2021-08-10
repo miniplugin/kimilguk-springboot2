@@ -25,13 +25,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/api/v1/**").hasRole("USER")
                 //.antMatchers("/api/v1/**").permitAll()
                 .anyRequest().authenticated()
-                .and()//추가
-                .oauth2Login().loginPage("/login")//추가
+                .and()//추가 formLogin()
+                .formLogin().loginPage("/login").failureUrl("/login?message=error").permitAll()//추가
+                .defaultSuccessUrl("/")//추가
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
                 .and()
                 .oauth2Login()
+                .loginPage("/login")//추가
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
 
