@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login").failureUrl("/login?message=error").permitAll()//추가
                 .defaultSuccessUrl("/")//추가
                 .and()
-                .logout()
+                .logout().invalidateHttpSession(true)
                 .logoutSuccessUrl("/")
                 .and()
                 .oauth2Login()
@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userService(customOAuth2UserService);
 
     }
-
+    //인증 매니저(Authentication Manager)가 인증에 대한 실제적 처리를 담당합니다.(아래)
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()

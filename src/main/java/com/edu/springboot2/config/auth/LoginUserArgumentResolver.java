@@ -60,9 +60,12 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
                     .build();
             httpSession.setAttribute("user", new SessionUser(user_local));
             SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
+            /*
             if(sessionUser.getName().equals("anonymousUser")) {
                 httpSession.invalidate();
             }
+            //시큐리티 Config 파일에 logout().invalidateHttpSession(true) 추가로 대체
+             */
             logger.info("사용자권한1 " + userAuthor + " 세션사용자명1 " + sessionUser.getName() + " 로그인사용자명1 "+ user_local.getName());
         }
         return httpSession.getAttribute("user");
