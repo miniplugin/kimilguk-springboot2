@@ -5,6 +5,7 @@
 - 인텔리J에서 깃 암호 저장하지 않게 설정(아래) 
 - https://stackoverflow.com/questions/28142361/change-remote-repository-credentials-authentication-on-intellij-idea-14
 - 헤로쿠용 빌드 파일 고정함. version '1.0.3-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss") 수정.
+- 유튜브 기술 참조: https://www.youtube.com/playlist?list=PLqaSEyuwXkSppQAjwjXZgKkjWbFoUdNXC
 
 ### 학습목차
 - [들어가며](./README/00.md)
@@ -32,10 +33,15 @@
 - 스프링레거시 폴더구조: roo최상위 > [controller, dao(src/main/reousrces/mappers쿼리), service, vo 등]
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
-### 20210811(수) 작업예정
+### 20210812(목) 작업예정
+- 일반회원 등록 기능 추가(admin 관리자 ROLE_ADMIN 에서 회원등록 권한 추가)
+
+### 20210811(수) 작업
 - Spring Boot: 시큐리티(Security) – 3 – 로그인 및 권한 정보를 DB에서 가져오기
 - 회원 DB 에서 로그인 연동하기 : http://yoonbumtae.com/?p=1202
-- 일반회원 등록 기능 추가(admin 관리자 ROLE_ADMIN 권한 추가)
+- 메모리에 하드코딩된 권한 정보를 데이터베이스에 옮겨서 가져오도록 처리.
+- 스프링 암호화 값 만들기: https://www.browserling.com/tools/bcrypt (암호: 1234, ROUND: 12)
+- @Entity SimpleUsers.java 생성 후 초기 값 import.sql 을 resources 폴더에 넣고 쿼리가 자동 실행 되게 함.
 
 ### 20210810(화) 작업
 - 로깅레벌 설정: https://programmer93.tistory.com/46
@@ -48,7 +54,7 @@
 - /login 기존 자동 생성된 소스를 개발자가 커스터마이징 해서 생성하기 마무리.
 - SecurityConfig 클래스에 폼로그인 메서드 추가: formLogin() 
 - indexController 클래스에 추가: if(user == null && principal != null) { //일반 로그인 일때 세션 저장
-- 빌더형 생성자 메서드에 데이터를 입력하는 방법(Serializable 사용안함. 아래처럼 메서드를 체이닝 사용)
+- 빌더형 생성자 메서드에 데이터를 입력하는 방법(Serializable 사용안함. 아래처럼 메서드를 체이닝 사용 = 빌더패턴)
 ```java
 //User user_local = new User(userName,"","",Role.USER);//Serializable 에러
 /*
@@ -61,6 +67,7 @@ User user_local = User.builder()
  */
 ```
 - 일반 로그인 성공: 메모리 인증 사용
+- 권한 정보를 inMemoryAuthentication 란 매서드를 이용해서 메모리에 하드코딩 해서 사용처리.
 - 위 작업을 컨트롤러에서 LoginUserArgumentResolver.java 로 변경 = 공통코드 처리: 기술참조(아래)
 - http://chomman.github.io/blog/spring%20framework/spring-security%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-%EC%82%AC%EC%9A%A9%EC%9E%90%EC%9D%98-%EC%A0%95%EB%B3%B4%EB%A5%BC-%EC%B0%BE%EB%8A%94-%EB%B0%A9%EB%B2%95/
 
@@ -69,7 +76,7 @@ User user_local = User.builder()
 - 네이버로그인 말고, 일반 회원 로그인 기능 추가
 - /login 기존 자동 생성된 소스를 개발자가 커스터마이징 해서 생성하기.(참조:  http://yoonbumtae.com/?p=2872)
 - SecurityConfig.java 에서 http는 내장된 대다수의 메서드들이 http 객체 자신을 반환하기 때문에 
-- 제이쿼리의 처럼 메서드를 체이닝 하여 사용할 수 있습니다.
+- 제이쿼리의 처럼 메서드를 체이닝 하여 사용(빌더패턴)할 수 있습니다.
 
 ### 20210808(일) 작업
 - [05] 4. 세션 저장소로 데이터베이스 사용하기
@@ -82,6 +89,7 @@ User user_local = User.builder()
 
 ### 20210806(금) 작업
 - [05 스프링시큐리티와 OAuth2.0으로 로그인]
+- 스프링 시큐리티 사전 정보: https://velog.io/@jayjay28/2019-09-04-1109-%EC%9E%91%EC%84%B1%EB%90%A8
 - 2.구글 로그인 연동하기 시작
 1. User @엔티티 도메인클래스+Role 열거형권한 Enum+UserRepository(내장 CRUD 자동메서드) 인터페이스셩성
 2. 소셜 로그인 코드를 작성: config.auth 패키지에 SecurityConfig 스프링 시큐리티클래스 + CustomOAuth2UserService 소셜로그인클래스를 생성한다.

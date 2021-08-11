@@ -2,6 +2,7 @@ package com.edu.springboot2.config.auth;
 
 import com.edu.springboot2.domain.user.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,9 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.sql.DataSource;
+
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private DataSource dataSource;
+
     private final CustomOAuth2UserService customOAuth2UserService;
 
     @Override
@@ -21,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()//추가
                 .antMatchers("/","/css/**","/images/**","/js/**","/h2-console/**", "/profile").permitAll()
-                .antMatchers("/api/v1/**").hasRole(Role.USER.name())
+                .antMatchers("/api/v1/**").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
                 //.antMatchers("/api/v1/**").hasRole("USER")
                 //.antMatchers("/api/v1/**").permitAll()
                 .anyRequest().authenticated()
@@ -41,12 +47,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .rolePrefix("ROLE_")
+                .usersByUsernameQuery("select username, replace(password, '$2y', '$2a'), true from simple_users where username = ?")
+                .authoritiesByUsernameQuery("select username, role from simple_users where username = ?");
+
+        /*
         auth.inMemoryAuthentication()
                 .withUser("admin").password(passwordEncoder().encode("1234")).roles("ADMIN")
                 .and()
                 .withUser("user").password(passwordEncoder().encode("1234")).roles("USER")
                 .and()
                 .withUser("guest").password(passwordEncoder().encode("guest")).roles("GUEST");
+        */
     }
 
     // passwordEncoder() 추가
