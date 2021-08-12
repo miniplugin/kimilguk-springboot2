@@ -40,7 +40,7 @@
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
 ### 20210813(금) 작업예정
-- 회원관리기능에 userid 필드 추가.
+- 회원관리기능에 userid 필드 추가예정.
 - 회원관리 기능 CRUD 추가(admin 관리자 ROLE_ADMIN 에서 회원등록 권한 추가)
 - 게시판 첨부파일 기능 추가 
 
