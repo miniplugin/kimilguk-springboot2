@@ -14,7 +14,7 @@ public class SimpleUsers extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false)
     private String username;
@@ -46,7 +46,7 @@ public class SimpleUsers extends BaseTimeEntity {
     @Override
     public String toString() {
         return "SimpleUsers{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
