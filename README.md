@@ -1,4 +1,4 @@
-### 책 [스프링 부트와 aws로 혼자 구현하는 웹 서비스] 소스를 분석해 하고 있습니다.
+### 책 [스프링 부트와 aws로 혼자 구현하는 웹 서비스] 소스를 분석 하고 있습니다.
 - 기술참조 : https://github.com/kwj1270/TIL_SPRINGBOOT_WITH_AWS
 - 소스참조 : https://github.com/kwj1270/freelec-springboot2-webservice
 - 신규작업 : https://github.com/kimilguk/kimilguk-springboot2.git
@@ -21,21 +21,40 @@
 - 모델domain(구성:@Entity클래스 와 JpaRepository인터페이스) -> 서비스(@Service) -> 컨트롤러(구성:@Controller+DTO클래스) -> 뷰(타임리프,머스테치템플릿)
 - @Entity클래스 : 데이터베이스 테이블을 자동생성 및 구현메서드(@Builder인터페이스사용) 추가.
 - JpaRepository인터페이스 : 형식: JpaRepository<Entity 클래스, PK 타입> 기능: CRUD기본 쿼리 자동생성.
-- 서비스(@Service) : 인터페이스 없이 사용.(주, 레포지토리는 인젝션으로 사용하지 않음. 
+- 서비스(@Service) : 인터페이스 없이 사용.(주, 레포지토리는 인젝션으로 사용하지 않아도 롬복 @RequiredArgsConstructor 으로 사용가능. 
 - 서비스 예, private final PostsRepository postsRepository;
 - DTO(Data Transfer Object)클래스 : 스프링레거시의 VO와 같이 데이터 전송 임시 저장소로 Get/Set 역할을함.
 - Mustache(머스테치)템플릿 : 템플릿 코드(예, {{userName}})로 자바 변수와 객체를 사용함.(JSTL과 타임리프,타일즈 대신사용)
 - 작업순서예, 1. Requet 데이터임시저장 Dto, 2. API 요청을 받을 Controller, 3.서비스로 DAO호출, 4. 도메인작업(엔티티+레포지토리인터페이스)
 - mustache 템플릿은 앱을 리스타트 해야지만 적용이 됩니다.
+- Lombok을 사용하면 생성자도 자동으로 생성할 수 있습니다. 
+- @NoArgsConstructor 어노테이션은 파라미터가 없는 기본 생성자를 자동으로 생성해주고, 
+- @AllArgsConstructor 어노테이션은 모든 필드 값을 파라미터로 받는 생성자를 자동으로 만들어줍니다. 
+- *가장중요 @RequiredArgsConstructor 어노테이션은 final 이나 @NonNull 인 필드 값만 파라미터로 받는 생성자를 자동으로 만들어줍니다.
+- sql 쿼리 확인하기.(아래)
+- https://velog.io/@dnjscksdn98/Spring-Data-JPA-H2-Console-%EB%B0%8F-%EB%A1%9C%EA%B9%85-%EC%84%A4%EC%A0%95
 
 ### 스프링 레거시와 스프링부트의 폴더 구조차이
 - 스프링레거시 폴더구조:  [pom.xml], [WEB-INF>web.xml],[WEB-INF>spring>root-context.xml,WEB-INF>appServlet>servlet-context.xml]
 - 스프링레거시 폴더구조: roo최상위 > [controller, dao(src/main/reousrces/mappers쿼리), service, vo 등]
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
-### 20210812(목) 작업예정
-- 일반회원 등록 기능 추가(admin 관리자 ROLE_ADMIN 에서 회원등록 권한 추가)
-- 게시판 첨부파일 기능 추가
+### 20210813(금) 작업예정
+- 회원관리 기능 CRUD 추가(admin 관리자 ROLE_ADMIN 에서 회원등록 권한 추가)
+- 게시판 첨부파일 기능 추가 
+
+### 20210812(목) 작업
+- 회원관리 기능 CRUD 추가(admin 관리자 ROLE_ADMIN 에서 회원등록 권한 추가)
+- [domain 폴더에 simple_users 패키지] 생성.
+- [@Entity] SimpleUsers.java 클래스 생성.(앱 실행시 SIMPLE_USERS 테이블 자동생성 jpa 기능)
+- @Entity 클래스에 빌더패턴으로 Setter 에 사용할 생성자매서드 추가.
+- SimpleUsersRepository.java 기능 [JpaRepository 인터페이스 쿼리메서드] 추가.
+- [web > dto 폴더]에 SimpleUsers.Dto [DTO](구 VO, 전송데이터 임시저장)기능 추가.
+- [service 폴더에 simple_users 패키지] 생성.
+- SimpleUsersService.java [@Service] 기능 추가.
+- [web 폴더] 에 SimpleUsersController.java [@Controller 클래스] 추가.
+- [resources > templates > simple_users 폴더]에 머스태치 jsp 파일 추가.
+- list.mustache 까지 작업.
 
 ### 20210811(수) 작업
 - Spring Boot: 시큐리티(Security) – 3 – 로그인 및 권한 정보를 DB에서 가져오기

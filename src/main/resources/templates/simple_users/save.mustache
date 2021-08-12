@@ -1,0 +1,28 @@
+{{>layout/header}}
+
+<h2>회원 등록</h2>
+<div class="col-md-12">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label for="title">회원ID</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="아이디를 입력하세요">
+            </div>
+            <div class="form-group">
+                <label for="author">암호</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="암호를 입력하세요">
+            </div>
+            <div class="form-group">
+                <label for="author">회원권한</label>
+                <input type="text" class="form-control" name="role" id="role" placeholder="권한을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label for="author">로그인가능</label>
+                <input type="text" class="form-control" name="enabled" id="enabled" placeholder="로그인가능여부를 입력하세요">
+            </div>
+        </form>
+        <a href="javascript:history.go(-1);" role="button" class="btn btn-secondary">취소</a>
+        <button type="button" class="btn btn-primary" id="btn-member-save">등록</button>
+    </div>
+</div>
+{{>layout/footer}}

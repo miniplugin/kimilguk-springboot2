@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()//추가
                 .antMatchers("/","/css/**","/images/**","/js/**","/h2-console/**", "/profile").permitAll()
+                .antMatchers("/simple_users/**").hasRole(Role.ADMIN.name())
                 .antMatchers("/api/v1/**").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
                 //.antMatchers("/api/v1/**").hasRole("USER")
                 //.antMatchers("/api/v1/**").permitAll()

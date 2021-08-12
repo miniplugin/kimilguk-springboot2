@@ -70,8 +70,9 @@ public class IndexController {
         model.addAttribute("posts", postsService.findAllDesc());
 
         if(user != null){
-            logger.info("네이버 API 로그인사용자명 또는 세션 발생 후 사용자명 " + user.getName());
+            logger.info("네이버 API 로그인사용자명 또는 세션 발생 후 사용자명 " + ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
             model.addAttribute("sessionUserName", user.getName());
+            model.addAttribute("sessionRoleAdmin", ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
         }
         return "index";
     }
