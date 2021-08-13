@@ -44,7 +44,7 @@ public class SimpleUsers extends BaseTimeEntity {
             encPassword = passwordEncoder.encode(password);
         }
         this.username = username;
-        if(!password.isEmpty()) {
+        if(!password.isEmpty()) {//에러페이지 만들기 encPassword
             this.password = password;
         }
         this.role = role;
