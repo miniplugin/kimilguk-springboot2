@@ -39,10 +39,14 @@
 - 스프링레거시 폴더구조: roo최상위 > [controller, dao(src/main/reousrces/mappers쿼리), service, vo 등]
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
-### 20210813(금) 작업예정
-- 회원관리기능에 userid 필드 추가예정.
+### 20210814(토) 작업예정
+- 게시판 첨부파일 기능 추가.
+- 에러 페이지처리 기능.
+- h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가예정. 
+
+### 20210813(금) 작업
+- 참고: 회원관리기능에서 username 이 userid 와 같은 역할.
 - 회원관리 기능 CRUD 추가(admin 관리자 ROLE_ADMIN 에서 회원등록 권한 추가)
-- 게시판 첨부파일 기능 추가 
 
 ### 20210812(목) 작업
 - 회원관리 기능 CRUD 추가(admin 관리자 ROLE_ADMIN 에서 회원등록 권한 추가)

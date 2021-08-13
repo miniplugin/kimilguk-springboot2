@@ -4,6 +4,7 @@ import com.edu.springboot2.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 
@@ -37,8 +38,15 @@ public class SimpleUsers extends BaseTimeEntity {
     }
     //수정시 DB 쿼리 없이 아래 메서드로 DB 데이터 바로 수정 가능
     public void update(String username, String password, String role, Boolean enabled){
+        String encPassword = null;
+        if(!password.isEmpty()) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            encPassword = passwordEncoder.encode(password);
+        }
         this.username = username;
-        this.password = password;
+        if(!password.isEmpty()) {
+            this.password = password;
+        }
         this.role = role;
         this.enabled = enabled;
     }

@@ -4,11 +4,13 @@ import com.edu.springboot2.domain.simple_users.SimpleUsers;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
-@Getter
+@Getter @Setter
 public class SimpleUsersDto {
     private Long id;
     private String username;
@@ -38,12 +40,28 @@ public class SimpleUsersDto {
 
     //DB 저장 후 PK 값 반환 가능
     public SimpleUsers toEntity(){
+        String encPassword = null;
+        if(!password.isEmpty()) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            encPassword = passwordEncoder.encode(password);
+        }
         return SimpleUsers.builder()
                 .username(username)
-                .password(password)
+                .password(encPassword)
                 .role(role)
                 .enabled(enabled)
                 .build();
     }
 
+    @Override
+    public String toString() {
+        return "SimpleUsersDto{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", enabled=" + enabled +
+                ", modifiedDate=" + modifiedDate +
+                '}';
+    }
 }
