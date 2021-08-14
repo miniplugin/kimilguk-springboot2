@@ -12,6 +12,11 @@
                         회원관리
                     </a>
                     {{/sessionRoleAdmin}}
+                    {{^sessionRoleAdmin}}
+                        <a href="/mypage/mypage/{{sessionUserId}}" class="btn btn-secondary active" role="button">
+                            마이페이지
+                        </a>
+                    {{/sessionRoleAdmin}}
                 {{/sessionUserName}}
                 {{^sessionUserName}}
                     <!--
@@ -27,6 +32,9 @@
                     </a>
                     <a href="/login" class="btn btn-warning active" role="button">
                         회원로그인
+                    </a>
+                    <a href="/signup" class="btn btn-secondary active" role="button">
+                        회원가입
                     </a>
                 {{/sessionUserName}}
             </div>
@@ -47,7 +55,7 @@
             {{#posts}}
                 <tr>
                     <td>{{id}}</td>
-                    <td><a href="/posts/update/{{id}}">{{title}}</a></td>
+                    <td><a href="/posts/read/{{id}}">{{title}}</a></td>
                     <td>{{author}}</td>
                     <td>{{modifiedDate}}</td>
                 </tr>

@@ -2,32 +2,75 @@ package com.edu.springboot2.web;
 
 import com.edu.springboot2.config.auth.LoginUser;
 import com.edu.springboot2.config.auth.dto.SessionUser;
-import com.edu.springboot2.domain.user.Role;
-import com.edu.springboot2.domain.user.User;
+import com.edu.springboot2.domain.simple_users.SimpleUsers;
+import com.edu.springboot2.domain.simple_users.SimpleUsersRepository;
 import com.edu.springboot2.service.posts.PostsService;
+import com.edu.springboot2.service.simple_users.SimpleUsersService;
+import com.edu.springboot2.util.ScriptUtils;
 import com.edu.springboot2.web.dto.PostsResponseDto;
+import com.edu.springboot2.web.dto.SimpleUsersDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.simple.SimpleLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
-import java.security.Principal;
-import java.util.Collection;
+import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final PostsService postsService;
+    private final SimpleUsersService simpleUsersService;
+    private final SimpleUsersRepository simpleUsersRepository;
+
+    @PostMapping("/mypage/signout")
+    public String simpleUsersDeletePost(HttpServletResponse response,SimpleUsersDto simpleUsersDto, Model model, @LoginUser SessionUser user) throws Exception {
+        logger.info("디버그 :" + simpleUsersDto.toString());
+        simpleUsersService.delete(simpleUsersDto.getId());
+        ScriptUtils.alertAndMovePage(response, "회원 탈퇴 되었습니다.", "/logout");
+        //return "redirect:/simple_users/list";
+        return null;
+    }
+    @PostMapping("/mypage/mypage")
+    public String simpleUsersUpdatePost(HttpServletResponse response, SimpleUsersDto simpleUsersDto, Model model, @LoginUser SessionUser user) throws Exception {
+        logger.info("디버그 :" + simpleUsersDto.toString());
+        simpleUsersDto.setRole("USER");//해킹 위험 때문에 강제로 추가
+        simpleUsersService.update(simpleUsersDto.getId(), simpleUsersDto);
+        ScriptUtils.alertAndMovePage(response, "수정 되었습니다.", "/mypage/mypage/" + simpleUsersDto.getId());
+        //return "redirect:/simple_users/update/" + simpleUsersDto.getId();
+        return null;
+    }
+    @GetMapping("/mypage/mypage/{id}")
+    public String simpleUsersUpdate(HttpServletResponse response,@PathVariable Long id, Model model, @LoginUser SessionUser user){
+        model.addAttribute("simple_user", simpleUsersService.findById(id));
+        return "mypage/mypage";
+    }
+    @PostMapping("/signup")
+    public String signUpPost(HttpServletResponse response, SimpleUsersDto simpleUsersDto, Model model, @LoginUser SessionUser user) throws Exception {
+        logger.info("디버그 :" + simpleUsersDto.toString());
+        simpleUsersDto.setRole("USER");//해킹 위험 때문에 강제로 추가
+        //SimpleUsersDto simpleUsers = simpleUsersService.findByName(user.getName());//서비스 빌더에 ID값이 생성전이라서 Setter에서 에러남.
+        SimpleUsers simpleUsers = simpleUsersRepository.findByName(simpleUsersDto.getUsername());
+        if(simpleUsers == null) {
+            simpleUsersService.save(simpleUsersDto);
+            ScriptUtils.alertAndMovePage(response, "회원가입 되었습니다. 로그인해 주세요", "/");
+        }else{
+            ScriptUtils.alertAndBackPage(response, "중복 아이디가 존재 합니다 아이디를 다시 입력해 주세요.");
+        }
+
+        //return "redirect:/simple_users/list";
+        return null;
+    }
+    @GetMapping("/signup")
+    public String signupGet(){
+        return "signup";
+    }
 
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String message, Model model, @LoginUser SessionUser user){
@@ -72,6 +115,9 @@ public class IndexController {
         if(user != null){
             logger.info("네이버 API 로그인사용자명 또는 세션 발생 후 사용자명 " + ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
             model.addAttribute("sessionUserName", user.getName());
+            SimpleUsersDto simpleUsers = simpleUsersService.findByName(user.getName());
+            //SimpleUsers simpleUsers = simpleUsersRepository.findByName(user.getName());
+            model.addAttribute("sessionUserId", simpleUsers.getId());
             model.addAttribute("sessionRoleAdmin", ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
         }
         return "index";
@@ -86,11 +132,23 @@ public class IndexController {
         return "posts-save";
     }
 
-    @GetMapping("/posts/update/{id}")
-    public String postsUpdate(@PathVariable Long id, Model model){
+    @GetMapping("/posts/read/{id}")
+    public String postsRead(@PathVariable Long id, Model model){
 
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post",dto);
+        return "posts-read";
+    }
+
+    @GetMapping("/posts/update/{id}")
+    public String postsUpdate(@PathVariable Long id, Model model, @LoginUser SessionUser user){
+
+        PostsResponseDto dto = postsService.findById(id);
+        model.addAttribute("post",dto);
+        if(user != null){
+            logger.info("네이버 API 로그인사용자명 또는 세션 발생 후 사용자명 " + ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
+            model.addAttribute("sessionRoleAdmin", ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
+        }
         return "posts-update";
     }
 }

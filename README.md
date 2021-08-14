@@ -45,6 +45,7 @@
 - h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가예정.
 
 ### 20210814(토) 작업
+- 회원가입 유효성 검사 자바 클래스 추가.
 - 에러 페이지처리 기능.(에러페이지 만들기 로 검색)
 - ErrorController 를 구현(상속)받는 클래스 생성 CustomErrorController implements ErrorController
 - templates 폴더에 error 폴더 추가 후 error.mustache 공통 에러 뷰파일 주가 

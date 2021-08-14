@@ -38,6 +38,12 @@ public class SimpleUsersService {
         return new SimpleUsersDto(entity);
     }
 
+    @Transactional
+    public SimpleUsersDto findByName(String username){
+        SimpleUsers entity = simpleUsersRepository.findByName(username);
+        return new SimpleUsersDto(entity);
+    }
+
     @Transactional(readOnly = true)
     public List<SimpleUsersDto> findAllDesc(){
         return simpleUsersRepository.findAllDesc().stream()
