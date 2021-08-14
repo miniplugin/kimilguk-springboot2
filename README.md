@@ -40,7 +40,8 @@
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
 ### 20210815(일) 작업예정
-- 게시판 첨부파일 기능 추가.
+- 게시판 첨부파일 기능 추가. (아래 기술참조 URL)
+- https://kyuhyuk.kr/article/spring-boot/2020/07/22/Spring-Boot-JPA-MySQL-Board-Post-File-Upload-Download
 - h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가예정.
 
 ### 20210814(토) 작업
