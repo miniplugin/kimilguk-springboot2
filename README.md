@@ -39,10 +39,14 @@
 - 스프링레거시 폴더구조: roo최상위 > [controller, dao(src/main/reousrces/mappers쿼리), service, vo 등]
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
-### 20210814(토) 작업예정
-- 에러 페이지처리 기능.(에러페이지 만들기 로 검색)
+### 20210815(일) 작업예정
 - 게시판 첨부파일 기능 추가.
-- h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가예정. 
+- h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가예정.
+
+### 20210814(토) 작업
+- 에러 페이지처리 기능.(에러페이지 만들기 로 검색)
+- ErrorController 를 구현(상속)받는 클래스 생성 CustomErrorController implements ErrorController
+- templates 폴더에 error 폴더 추가 후 error.mustache 공통 에러 뷰파일 주가 
 
 ### 20210813(금) 작업
 - 참고: 회원관리기능에서 username 이 userid 와 같은 역할.

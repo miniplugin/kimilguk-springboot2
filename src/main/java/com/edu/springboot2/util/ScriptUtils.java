@@ -1,4 +1,4 @@
-package com.edu.springboot2.web;
+package com.edu.springboot2.util;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

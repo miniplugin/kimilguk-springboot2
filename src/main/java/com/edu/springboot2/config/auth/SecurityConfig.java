@@ -25,10 +25,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable().headers().frameOptions().disable().and()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()//추가
-                .antMatchers("/","/css/**","/images/**","/js/**","/h2-console/**", "/profile").permitAll()
                 .antMatchers("/simple_users/**").hasRole(Role.ADMIN.name())
-                .antMatchers("/api/v1/**").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
+                .antMatchers("/api/v1/**","/posts/**").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
+                .antMatchers("/login").permitAll()//추가
+                .antMatchers("/**","/css/**","/images/**","/js/**","/h2-console/**", "/profile").permitAll()
                 //.antMatchers("/api/v1/**").hasRole("USER")
                 //.antMatchers("/api/v1/**").permitAll()
                 .anyRequest().authenticated()
