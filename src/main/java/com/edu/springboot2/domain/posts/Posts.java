@@ -24,16 +24,20 @@ public class Posts extends BaseTimeEntity {
 
     private String author;
 
+    private Long fileId;
+
     @Builder
-    public Posts(String title, String content, String author){
+    public Posts(String title, String content, String author, Long fileId){
         this.title = title;
         this.content = content;
         this.author = author;
+        this.fileId = fileId;
     }
 
-    public void update(String title, String content){
+    public void update(String title, String content, Long fileId){
         this.title = title;
         this.content = content;
+        this.fileId = fileId;
     }
 
     @Override
@@ -43,6 +47,7 @@ public class Posts extends BaseTimeEntity {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", author='" + author + '\'' +
+                ", fileId='" + fileId + '\'' +
                 '}';
     }
 }

@@ -39,10 +39,18 @@
 - 스프링레거시 폴더구조: roo최상위 > [controller, dao(src/main/reousrces/mappers쿼리), service, vo 등]
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
-### 20210815(일) 작업예정
+### 20210816(월) 작업예정
+- file 처리 CRUD 중 RUD 처리(다운로드 기능)
+- 게시물 수정시 파일 수정 처리는 기존파일 삭제 후 신규파일 저장 및 파일 엔티티는 update 처리
+- 게시물 삭제 및 개별 파일 삭제 시는 기존파일 삭제 후 파일 엔티티 삭제
+- h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가예정.
+
+### 20210815(일) 작업
 - 게시판 첨부파일 기능 추가. (아래 기술참조 URL)
 - https://kyuhyuk.kr/article/spring-boot/2020/07/22/Spring-Boot-JPA-MySQL-Board-Post-File-Upload-Download
-- h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가예정.
+- 기존 게시판 로직에 fileId 필드 추가.(domain, dto, mustache, index.js)
+- File 로직 추가(domain, repository, dto, Service)
+- File 뷰단 처리(post-save.mustache, index.js) file 처리 CRUD 중 C처리
 
 ### 20210814(토) 작업
 - 회원가입 유효성 검사 자바 클래스 추가.
