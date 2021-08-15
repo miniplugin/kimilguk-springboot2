@@ -2,7 +2,7 @@ var main = {
     init : function () {
         var _this = this;
         $('#btn-save').on('click', function(){
-            _this.saveFile();
+            _this.save();
         })
         $('#btn-update').on('click', function(){
             _this.update();
@@ -13,14 +13,10 @@ var main = {
     },
     saveFile : function() {
         var _this = this;
-        // Get form
         var form = $('#form_posts')[0];
         var formData = new FormData(form);
-        if($("#customFile").val() == "") {
-            _this.save();
-            return;
-        }
         $.ajax({
+            async: false,//게시물 등록시 첨부파일은 비동기에서 동기로 바꿔야지만, 업로드 후 게시물이 저장됩니다.
             type: "POST",
             enctype: 'multipart/form-data',
             url: "/api/upload",
@@ -34,7 +30,7 @@ var main = {
                 alert("첨부파일 OK : " + result);
                 $("#file_id").val(result);
             },
-            complete: _this.save,
+            //complete: _this.save,
             error: function (e) {
                 $("#file_id").text("");
                 console.log("ERROR : ", e);
@@ -44,6 +40,11 @@ var main = {
         });
     },
     save : function () {
+        var _this = this;
+        if($("#customFile").val() != "") {
+            _this.saveFile();
+            //alert($('#file_id').val());
+        }
         var data = {
             title: $('#title').val(),
             author: $('#author').val(),
@@ -55,6 +56,13 @@ var main = {
             url: '/api/v1/posts',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
+            /*
+            beforeSend : function(xhr) {
+                if (false) {
+                    xhr.abort();
+                }
+            },
+            */
             data: JSON.stringify(data)
         }).done(function(result){
             alert('글이 등록되었습니다.' + result);
