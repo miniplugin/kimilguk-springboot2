@@ -48,6 +48,7 @@
 - 게시물 수정시 파일 수정 처리는 기존파일 삭제 후 신규파일 저장 및 파일 엔티티는 update 처리
 - 게시물 삭제 및 개별 파일 삭제 시는 기존파일 삭제 후 파일 엔티티 삭제
 - $ajax 용 index.js, post-save, post-update mustache 파일 기능 추가
+- application.properties 에 업로드 용량과 경로 추가.
 
 ### 20210815(일) 작업
 - 게시판 첨부파일 기능 추가. (아래 기술참조 URL)
