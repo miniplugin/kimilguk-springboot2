@@ -15,6 +15,12 @@ public class FileService {
     }
 
     @Transactional
+    public void deleteFile(Long id) {
+        fileRepository.findById(id).orElseThrow(()->new
+                IllegalArgumentException("해당 파일이 없습니다. id="+ id));
+        fileRepository.deleteById(id);
+    }
+    @Transactional
     public Long saveFile(FileDto fileDto) {
         return fileRepository.save(fileDto.toEntity()).getId();
     }

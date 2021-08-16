@@ -4,9 +4,11 @@ import com.edu.springboot2.config.auth.LoginUser;
 import com.edu.springboot2.config.auth.dto.SessionUser;
 import com.edu.springboot2.domain.simple_users.SimpleUsers;
 import com.edu.springboot2.domain.simple_users.SimpleUsersRepository;
+import com.edu.springboot2.service.posts.FileService;
 import com.edu.springboot2.service.posts.PostsService;
 import com.edu.springboot2.service.simple_users.SimpleUsersService;
 import com.edu.springboot2.util.ScriptUtils;
+import com.edu.springboot2.web.dto.FileDto;
 import com.edu.springboot2.web.dto.PostsResponseDto;
 import com.edu.springboot2.web.dto.SimpleUsersDto;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
@@ -28,6 +29,7 @@ public class IndexController {
     private final PostsService postsService;
     private final SimpleUsersService simpleUsersService;
     private final SimpleUsersRepository simpleUsersRepository;
+    private final FileService fileService;
 
     @PostMapping("/mypage/signout")
     public String simpleUsersDeletePost(HttpServletResponse response,SimpleUsersDto simpleUsersDto, Model model, @LoginUser SessionUser user) throws Exception {
@@ -137,6 +139,10 @@ public class IndexController {
 
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post",dto);
+        if(dto.getFileId() != null) {
+            FileDto fileDto = fileService.getFile(dto.getFileId());
+            model.addAttribute("OrigFilename", fileDto.getOrigFilename());
+        }
         return "posts-read";
     }
 
@@ -145,6 +151,10 @@ public class IndexController {
 
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post",dto);
+        if(dto.getFileId() != null) {
+            FileDto fileDto = fileService.getFile(dto.getFileId());
+            model.addAttribute("OrigFilename", fileDto.getOrigFilename());
+        }
         if(user != null){
             logger.info("네이버 API 로그인사용자명 또는 세션 발생 후 사용자명 " + ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
             model.addAttribute("sessionRoleAdmin", ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
