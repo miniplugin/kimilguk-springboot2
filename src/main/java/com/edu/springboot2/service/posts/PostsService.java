@@ -7,6 +7,8 @@ import com.edu.springboot2.web.dto.PostsResponseDto;
 import com.edu.springboot2.web.dto.PostsSaveRequestDto;
 import com.edu.springboot2.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +42,17 @@ public class PostsService {
         return new PostsResponseDto(entity);
     }
 
+    @Transactional
+    public Page<Posts> search(String keyword, Pageable pageable) {
+        Page<Posts> postsList = postsRepository.findByTitleContaining(keyword, pageable);
+        return postsList;
+    }
+    //아래는 페이징 테스트 전용 실제는 위에서 검색과 같이 사용합니다.
+    @Transactional
+    public Page<Posts> getBoardList(Pageable pageable) {
+        return postsRepository.findAll(pageable);
+    }
+    //아래 레포지토리 쿼리메서드는 필요 없음. 위 내장된 메서드 사용 : PostsListResponseDto 도 필요 없음.
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc(){
         return postsRepository.findAllDesc().stream()

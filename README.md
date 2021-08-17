@@ -39,9 +39,13 @@
 - 스프링레거시 폴더구조: roo최상위 > [controller, dao(src/main/reousrces/mappers쿼리), service, vo 등]
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
-### 20210817(화) 작업예정
+### 20210817(화) 작업
 - h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가예정.
-- 검색과 페이징 처리 기능 추가.
+- 검색과 페이징 처리 기능 추가. 기술참조: https://gonyda.tistory.com/15
+- 1. 검색 : Page<Posts> findByTitleContaining(String keyword, Pageable pageable); JPA 내장된 매서드 사용
+- 2. 페이징 처리: 컨트롤러에서 @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable 사용
+- 3. 검색 페이지에서 페이징 model.addAttribute("next", pageable.next().getPageNumber()); 사용
+- 페이징 처리 다른 방법(좀더 복잡): https://victorydntmd.tistory.com/333
 
 ### 20210816(월) 작업
 - file 처리 CRUD 중 RUD 처리(다운로드 기능)

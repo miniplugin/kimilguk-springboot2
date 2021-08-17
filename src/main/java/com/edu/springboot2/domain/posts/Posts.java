@@ -14,7 +14,7 @@ public class Posts extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private long id;
 
     @Column(length = 500, nullable = false)
     private String title;
@@ -43,7 +43,7 @@ public class Posts extends BaseTimeEntity {
     @Override
     public String toString() {
         return "Posts{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", author='" + author + '\'' +
