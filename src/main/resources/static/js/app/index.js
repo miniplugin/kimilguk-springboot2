@@ -1,6 +1,9 @@
 var main = {
     init : function () {
         var _this = this;
+        $('#btn-delete-file_one').on('click', function(){
+            _this.deleteFileOne();
+        })
         $('#btn-save').on('click', function(){
             _this.save();
         })
@@ -10,6 +13,24 @@ var main = {
         $('#btn-delete').on('click', function(){
             _this.delete();
         })
+    },
+    deleteFileOne : function() {
+        var _this = this;
+        var fileId = $('#file_id').val();
+        $.ajax({
+            async: false,//게시물 등록시 첨부파일은 비동기에서 동기로 바꿔야지만, 업로드 후 게시물이 저장됩니다.
+            type: 'DELETE',
+            url: '/api/file_delete/' + fileId,
+            //dataType: 'text',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+        }).done(function(result){
+            alert('첨부파일 삭제 성공 ' +  result.success);
+            $('#file_id').val("");
+            _this.update();
+        }).fail(function(error){
+            alert('첨부파일 삭제 실패 ' + JSON.stringify(error));
+        });
     },
     deleteFile : function() {
         var fileId = $('#file_id').val();
@@ -116,7 +137,8 @@ var main = {
             data: JSON.stringify(data)
         }).done(function(){
             alert('글이 수정되었습니다.');
-            window.location.href = "/";
+            //window.location.href = "/";
+            location.reload();
         }).fail(function(error){
             alert(JSON.stringify(error));
         });

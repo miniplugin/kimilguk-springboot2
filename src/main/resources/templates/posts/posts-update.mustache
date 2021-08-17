@@ -29,6 +29,7 @@
             </div>
             {{#post.fileId}}
                 <a href="/api/file_download/{{post.fileId}}">{{OrigFilename}}</a>
+                <button type="button" class="btn btn-danger" id="btn-delete-file_one">파일삭제</button>
                 <input type="hidden" name="file_id" id="file_id" value="{{post.fileId}}">
             {{/post.fileId}}
             {{^post.fileId}}
