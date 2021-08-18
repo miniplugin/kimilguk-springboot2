@@ -1,4 +1,19 @@
 {{>layout/header}}
+<script>
+$(document).ready(function() {
+    var pageSize = {{pageIndex}};
+    var currPage = {{page}} + 0;
+    for(var i = 0; i < pageSize-1; i++){
+        $("#page_list").append("<option value='"+i+"'>"+(i+1)+"</option>");
+    }
+    $("#page_list").on("change", function(){
+        var v = $("#page_list > option:selected").val();
+        //alert("선택되어있는 셀렉트의 value == " + v);
+        window.location.href = '?page='+v;
+    });
+    $("#page_list option:eq("+currPage+")").prop('selected', true); // option 3번째 선택
+});
+</script>
     <div class="col-md-12">
         <!-- 로그인 기능 영역 -->
         <div class="row">
@@ -76,6 +91,9 @@
         {{^prevCheck}}
             <li class="page-item disabled"><a class="page-link" href="?page={{previous}}">Previous</a></li>
         {{/prevCheck}}
+        <select id="page_list" class="form-control col-md-3">
+
+        </select>
         <!-- 의미 없어서 제거
         {{#pageIndex}}
             <li class="page-item"><a class="page-link" href="?page={{.}}">{{.}}</a></li>

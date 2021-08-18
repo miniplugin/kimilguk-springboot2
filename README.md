@@ -39,8 +39,12 @@
 - 스프링레거시 폴더구조: roo최상위 > [controller, dao(src/main/reousrces/mappers쿼리), service, vo 등]
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
-### 20210818(수) 작업예정.
-- h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가예정.
+### 20210819(목) 작업.
+- h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가.
+
+### 20210818(수) 작업.
+- Save-, Update-, List-, ResponseDto 클래스 1개로 통합. PostsDto.java 
+- 페이징 웹툰 회차 처럼 Select 박스추가.
 
 ### 20210817(화) 작업
 - 검색과 페이징 처리 기능 추가. 기술참조: https://gonyda.tistory.com/15

@@ -21,10 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -94,7 +91,7 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String index(HttpServletRequest request, String search_type,@RequestParam(value="keyword", defaultValue = "")String keyword, @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model, @LoginUser SessionUser user){ //, Principal principal, HttpSession httpSession
+    public String index(@ModelAttribute(value="page")String page, HttpServletRequest request, String search_type, @RequestParam(value="keyword", defaultValue = "")String keyword, @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model, @LoginUser SessionUser user){ //, Principal principal, HttpSession httpSession
         //model.addAttribute("posts", postsService.findAllDesc());//페이지 사용않할 때
         //if(keyword == null) { keyword = ""; }//@RequestParam defaultValue 처리
         String sessionKeyword = (String) request.getSession().getAttribute("sessionKeyword");
@@ -116,11 +113,13 @@ public class IndexController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("prevCheck", searchList.hasPrevious());
         model.addAttribute("nextCheck", searchList.hasNext());
+        /*
         ArrayList pageIndex = new ArrayList();
         for(int i=0; i<pageable.getPageSize()-1; i++) {
             pageIndex.add(i);
         }
-        model.addAttribute("pageIndex", pageIndex);
+        */
+        model.addAttribute("pageIndex", pageable.getPageSize());
 
         if(user != null){
             logger.info("네이버 API 로그인사용자명 또는 세션 발생 후 사용자명 " + ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
