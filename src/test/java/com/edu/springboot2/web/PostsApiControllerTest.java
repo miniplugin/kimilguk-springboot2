@@ -2,8 +2,7 @@ package com.edu.springboot2.web;
 
 import com.edu.springboot2.domain.posts.Posts;
 import com.edu.springboot2.domain.posts.PostsRepository;
-import com.edu.springboot2.web.dto.PostsSaveRequestDto;
-import com.edu.springboot2.web.dto.PostsUpdateRequestDto;
+import com.edu.springboot2.web.dto.PostsDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
@@ -13,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -71,7 +68,7 @@ public class PostsApiControllerTest {
         // given
         String title = "title";
         String content = "content";
-        PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
+        PostsDto requestDto = PostsDto.builder()
                 .title(title)
                 .content(content)
                 .author("author")
@@ -79,7 +76,7 @@ public class PostsApiControllerTest {
 
         String url = "http://127.0.0.1:"+ port + "/api/v1/posts";
         System.out.println("디버그: " + url);
-        //실제DB저장 하려면 시작 시작 단, SecurityConfig 에서 .antMatchers("/api/v1/**").permitAll() 적용필요
+        //실제 DB 저장 하려면 시작 단, SecurityConfig 에서 .antMatchers("/api/v1/**").permitAll() 적용필요
         /*
         //when1
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
@@ -96,9 +93,11 @@ public class PostsApiControllerTest {
                 .andExpect(status().isOk());
 
         List<Posts> all = postsRepository.findAll();
-        System.out.println("디버그: "+all.size());
-        assertThat(all.get(0).getTitle()).isEqualTo(title);
-        assertThat(all.get(0).getContent()).isEqualTo(content);
+        if(all.size() > 0) {
+            System.out.println("디버그: " + all.size());
+            assertThat(all.get(20).getTitle()).isEqualTo(title);
+            assertThat(all.get(20).getContent()).isEqualTo(content);
+        }
     }
     @Test
     @WithMockUser(roles="USER")
@@ -115,7 +114,7 @@ public class PostsApiControllerTest {
         String expectedTitle = "title2";
         String expectedContent = "content2";
 
-        PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
+        PostsDto requestDto = PostsDto.builder()
                 .title(expectedTitle)
                 .content(expectedContent)
                 .build();

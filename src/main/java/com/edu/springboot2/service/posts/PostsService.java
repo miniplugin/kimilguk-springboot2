@@ -2,10 +2,7 @@ package com.edu.springboot2.service.posts;
 
 import com.edu.springboot2.domain.posts.Posts;
 import com.edu.springboot2.domain.posts.PostsRepository;
-import com.edu.springboot2.web.dto.PostsListResponseDto;
-import com.edu.springboot2.web.dto.PostsResponseDto;
-import com.edu.springboot2.web.dto.PostsSaveRequestDto;
-import com.edu.springboot2.web.dto.PostsUpdateRequestDto;
+import com.edu.springboot2.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,12 +19,12 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     @Transactional
-    public Long save(PostsSaveRequestDto requestDto){
+    public Long save(PostsDto requestDto){
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 
     @Transactional
-    public Long update(Long id, PostsUpdateRequestDto requestDto){
+    public Long update(Long id, PostsDto requestDto){
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new
                 IllegalArgumentException("해당 게시글이 없습니다. id="+ id));
         posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getFileId());
@@ -36,10 +33,10 @@ public class PostsService {
     }
 
     @Transactional
-    public PostsResponseDto findById(Long id){
+    public PostsDto findById(Long id){
         Posts entity = postsRepository.findById(id).orElseThrow(() -> new
                 IllegalArgumentException("헤당 게시글이 없습니다. id="+id));
-        return new PostsResponseDto(entity);
+        return new PostsDto(entity);
     }
 
     @Transactional
@@ -47,6 +44,7 @@ public class PostsService {
         Page<Posts> postsList = postsRepository.findByTitleContaining(keyword, pageable);
         return postsList;
     }
+    /*
     //아래는 페이징 테스트 전용 실제는 위에서 검색과 같이 사용합니다.
     @Transactional
     public Page<Posts> getBoardList(Pageable pageable) {
@@ -59,6 +57,7 @@ public class PostsService {
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }
+    */
 
     @Transactional
     public void delete (Long id){

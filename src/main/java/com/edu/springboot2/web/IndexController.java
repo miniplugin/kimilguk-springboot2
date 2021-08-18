@@ -10,7 +10,7 @@ import com.edu.springboot2.service.posts.PostsService;
 import com.edu.springboot2.service.simple_users.SimpleUsersService;
 import com.edu.springboot2.util.ScriptUtils;
 import com.edu.springboot2.web.dto.FileDto;
-import com.edu.springboot2.web.dto.PostsResponseDto;
+import com.edu.springboot2.web.dto.PostsDto;
 import com.edu.springboot2.web.dto.SimpleUsersDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -28,9 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -97,32 +95,6 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request, String search_type,@RequestParam(value="keyword", defaultValue = "")String keyword, @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model, @LoginUser SessionUser user){ //, Principal principal, HttpSession httpSession
-        /* //LoginUserArgumentResolover.java 로 옮김
-        if(user == null && principal != null) { //일반 로그인 일때 세션 저장
-            String userName = principal.getName();
-            Collection<GrantedAuthority> roles = ((UsernamePasswordAuthenticationToken) principal).getAuthorities();
-            System.out.println("디버그 "+roles);
-            //User user_local = new User(userName,"","",Role.USER);//Serializable 에러
-            Role userAuthor = null;
-            if(roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-                userAuthor = Role.ADMIN;
-            }else if(roles.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-                userAuthor = Role.USER;
-            }else{
-                userAuthor = Role.GUEST;
-            }
-            User user_local = User.builder()
-                    .name(userName)
-                    .email("")
-                    .picture("")
-                    .role(userAuthor)
-                    .build();
-            httpSession.setAttribute("user", new SessionUser(user_local));
-            SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
-            System.out.println("사용자권한" + userAuthor + " 세션사용자명 " + sessionUser.getName() + " 로그인사용자명 "+ user_local.getName());
-            model.addAttribute("sessionUserName", sessionUser.getName());
-        }
-        */
         //model.addAttribute("posts", postsService.findAllDesc());//페이지 사용않할 때
         //if(keyword == null) { keyword = ""; }//@RequestParam defaultValue 처리
         String sessionKeyword = (String) request.getSession().getAttribute("sessionKeyword");
@@ -173,7 +145,7 @@ public class IndexController {
     @GetMapping("/posts/read/{id}")
     public String postsRead(@PathVariable Long id, Model model){
 
-        PostsResponseDto dto = postsService.findById(id);
+        PostsDto dto = postsService.findById(id);
         model.addAttribute("post",dto);
         if(dto.getFileId() != null) {
             FileDto fileDto = fileService.getFile(dto.getFileId());
@@ -185,7 +157,7 @@ public class IndexController {
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model, @LoginUser SessionUser user){
 
-        PostsResponseDto dto = postsService.findById(id);
+        PostsDto dto = postsService.findById(id);
         model.addAttribute("post",dto);
         if(dto.getFileId() != null) {
             FileDto fileDto = fileService.getFile(dto.getFileId());
