@@ -37,6 +37,7 @@ public class SimpleUsers extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean enabled;
 
+
     @Builder
     public SimpleUsers(String username, String password, String role, Boolean enabled){
         this.username = username;

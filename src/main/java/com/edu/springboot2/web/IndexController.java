@@ -122,11 +122,15 @@ public class IndexController {
         model.addAttribute("pageIndex", pageable.getPageSize());
 
         if(user != null){
+            logger.info("디버그22 " + user.getName());
             logger.info("네이버 API 로그인사용자명 또는 세션 발생 후 사용자명 " + ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
             model.addAttribute("sessionUserName", user.getName());
-            SimpleUsersDto simpleUsers = simpleUsersService.findByName(user.getName());
-            //SimpleUsers simpleUsers = simpleUsersRepository.findByName(user.getName());
-            model.addAttribute("sessionUserId", simpleUsers.getId());
+            if(simpleUsersRepository.findByName(user.getName()) != null) {
+                SimpleUsersDto simpleUsers = simpleUsersService.findByName(user.getName());
+                model.addAttribute("sessionUserId", simpleUsers.getId());
+            } else {
+                model.addAttribute("sessionUserId", null);
+            }
             model.addAttribute("sessionRoleAdmin", ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
         }
         return "posts/posts-list";

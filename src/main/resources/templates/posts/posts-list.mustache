@@ -28,9 +28,11 @@ $(document).ready(function() {
                     </a>
                     {{/sessionRoleAdmin}}
                     {{^sessionRoleAdmin}}
-                        <a href="/mypage/mypage/{{sessionUserId}}" class="btn btn-secondary active" role="button">
-                            마이페이지
-                        </a>
+                        {{#sessionUserId}}
+                            <a href="/mypage/mypage/{{sessionUserId}}" class="btn btn-secondary active" role="button">
+                                마이페이지
+                            </a>
+                        {{/sessionUserId}}
                     {{/sessionRoleAdmin}}
                 {{/sessionUserName}}
                 {{^sessionUserName}}
