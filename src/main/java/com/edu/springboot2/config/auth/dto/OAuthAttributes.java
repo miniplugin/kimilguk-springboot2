@@ -1,7 +1,7 @@
 package com.edu.springboot2.config.auth.dto;
 
 import com.edu.springboot2.domain.user.Role;
-import com.edu.springboot2.domain.user.User;
+import com.edu.springboot2.domain.user.Users;
 import lombok.Builder;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -70,8 +70,8 @@ public class OAuthAttributes {
     }
 
 
-    public User toEntity(){
-        return User.builder()
+    public Users toEntity(){
+        return Users.builder()
                 .name(name)
                 .email(email)
                 .picture(picture)

@@ -39,8 +39,21 @@
 - 스프링레거시 폴더구조: roo최상위 > [controller, dao(src/main/reousrces/mappers쿼리), service, vo 등]
 - 스프링부트 폴더구조: roo최상위 > [build.gradle], [Application.java] > [config], [domain, service, web>dto 등]
 
+### OAuth2 로그인에 영향을 주는 파일 6개
+- UserRepository > CustomOAuth2UserService(외부 API 리턴값 발생 후 세션 DB 저장) > OAuthAttributes > LoginUserArgumentResolver > SessionUser > Users(엔티티)
+
+### 20210820(금) 작업예정.
+- 헤로쿠에 postgreSQL DB 생성 후 연동시키기, application-db-heroku.properties 추가.
+- application.db-postgres.properties 설정파일에서 초기 더미값 입력 후 업데이트만 적용 시키기 (깃 소스를 2번 배포) 아래 
+- spring.datasource.schema=classpath:import.sql 부분 주석 처리 후 배포(초기:JPA 엔티티로 테이블 자동 생성)
+- spring.datasource.schema=classpath:import.sql 부분 주석 해제 후 배포(중간)
+- spring.datasource.schema=classpath:import.sql 부분 주석 처리 후 배포(마지막)
+- postgreSQL 에서 시퀸스 posts_id_seq 20으로 수정. simple_users_id_seq 2로 수정. (더미데이터 입력 후 라서, mysql 일때는 필요 없음.)
+
 ### 20210819(목) 작업.
 - h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가.
+- build.gradle 와부 DB 의존성 추가 
+- db-postgres.properties 파일추가 (하이버네이트 JPA 를 이용해서 테이블 생성, 더미데이터 입력)
 
 ### 20210818(수) 작업.
 - Save-, Update-, List-, ResponseDto 클래스 1개로 통합. PostsDto.java 

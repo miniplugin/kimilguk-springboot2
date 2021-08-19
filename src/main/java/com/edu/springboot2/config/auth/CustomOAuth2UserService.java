@@ -2,7 +2,7 @@ package com.edu.springboot2.config.auth;
 
 import com.edu.springboot2.config.auth.dto.OAuthAttributes;
 import com.edu.springboot2.config.auth.dto.SessionUser;
-import com.edu.springboot2.domain.user.User;
+import com.edu.springboot2.domain.user.Users;
 import com.edu.springboot2.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,7 +34,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        User user = saveOrUpdate(attributes);
+        Users user = saveOrUpdate(attributes);
 
         httpSession.setAttribute("user", new SessionUser(user));
 
@@ -43,8 +43,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes.getNameAttributeKey());
     }
 
-    private User saveOrUpdate(OAuthAttributes attributes){
-        User user = userRepository.findByEmail(attributes.getEmail())
+    private Users saveOrUpdate(OAuthAttributes attributes){
+        Users user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());//외부 API 로그인 인증한 권한은 이 메서드에서 발생됨.
 

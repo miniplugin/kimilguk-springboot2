@@ -2,7 +2,7 @@ package com.edu.springboot2.config.auth;
 
 import com.edu.springboot2.config.auth.dto.SessionUser;
 import com.edu.springboot2.domain.user.Role;
-import com.edu.springboot2.domain.user.User;
+import com.edu.springboot2.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +52,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
             }else{
                 userAuthor = Role.GUEST;
             }
-            User user_local = User.builder()
+            Users user_local = Users.builder()
                     .name(userName)
                     .email("")
                     .picture("")
