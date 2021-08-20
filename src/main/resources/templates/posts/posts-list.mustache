@@ -3,7 +3,8 @@
 $(document).ready(function() {
     var pageSize = {{pageIndex}};
     var currPage = {{page}} + 0;
-    for(var i = 0; i < pageSize-1; i++){
+    $("#page_numbers").text(currPage+1 + " 페이지 / 전체 " + pageSize);
+    for(var i = 0; i < pageSize; i++){
         $("#page_list").append("<option value='"+i+"'>"+(i+1)+"</option>");
     }
     $("#page_list").on("change", function(){
@@ -87,13 +88,14 @@ $(document).ready(function() {
         </tbody>
     </table>
     <ul class="pagination justify-content-center">
+        <span id="page_numbers" class="badge badge-secondary" style="padding: 12px;"></span>&nbsp;
         {{#prevCheck}}
             <li class="page-item"><a class="page-link" href="?page={{previous}}">Previous</a></li>
         {{/prevCheck}}
         {{^prevCheck}}
             <li class="page-item disabled"><a class="page-link" href="?page={{previous}}">Previous</a></li>
         {{/prevCheck}}
-        <select id="page_list" class="form-control col-md-3">
+        <select id="page_list" class="form-control col-md-2">
 
         </select>
         <!-- 의미 없어서 제거

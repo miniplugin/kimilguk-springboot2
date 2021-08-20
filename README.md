@@ -42,7 +42,7 @@
 ### OAuth2 로그인에 영향을 주는 파일 6개
 - UserRepository > CustomOAuth2UserService(외부 API 리턴값 발생 후 세션 DB 저장) > OAuthAttributes > LoginUserArgumentResolver > SessionUser > Users(엔티티)
 
-### 20210820(금) 작업예정.
+### 20210820(금) 작업.
 - 헤로쿠에 postgreSQL DB 생성 후 연동시키기, application-db-heroku.properties 추가.
 - application.db-postgres.properties 설정파일에서 초기 더미값 입력 후 업데이트만 적용 시키기 (깃 소스를 2번 배포) 아래 
 - spring.datasource.schema=classpath:import.sql 부분 주석 처리 후 배포(초기:JPA 엔티티로 테이블 자동 생성)
