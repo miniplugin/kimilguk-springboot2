@@ -2,7 +2,7 @@
 - 기술참조 : https://github.com/kwj1270/TIL_SPRINGBOOT_WITH_AWS
 - 소스참조 : https://github.com/kwj1270/freelec-springboot2-webservice
 - 신규작업 : https://github.com/kimilguk/kimilguk-springboot2.git
-- 인텔리J에서 깃 암호 저장하지 않게 설정(아래) 
+- 인텔리J 에서 깃 암호 저장하지 않게 설정(아래) 
 - https://stackoverflow.com/questions/28142361/change-remote-repository-credentials-authentication-on-intellij-idea-14
 - 헤로쿠용 빌드 파일 고정함. version '1.0.3-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss") 수정.
 - 유튜브 기술 참조: https://www.youtube.com/playlist?list=PLqaSEyuwXkSppQAjwjXZgKkjWbFoUdNXC
@@ -16,7 +16,7 @@
 - [05 스프링시큐리티와 OAuth2.0으로 로그인](./README/05.md)
 
 ### 이 프로젝트에서 구현된 내역(아래)
-- 개발툴: 인텔리J 커뮤니티, 빌드툴: 그래들4.10.2버전(오픈자바8), 스프링부트: 2.1.7버전
+- 개발툴: 인텔리J 커뮤니티, 빌드툴버전: 그래들6.7.1, 스프링부트버전: 2.4.9, 자바버전: 오픈 JDK8
 - 사용된 기술: 롬복, JUnit 테스트, mustache 화면처리, 하이버네이트 스프링 JPA, H2(메모리) postgreSQL(RDBS) 데이터베이스, HikariPool(스프링부트에 내장된 기본 DB 커넥션), 스프링 시큐리티(DB) + OAuth2(네이버외부API) + 스프링세션
 - 구현1: 게시판 CRUD JUnit 테스트(롬복, HikariPool 사용)
 - 구현2: 게시판 CRUD + 첨부파일기능(mustache 화면처리, 하이버네이트 H2 메모리 DB 사용)
@@ -58,6 +58,9 @@
 - spring.datasource.schema=classpath:import.sql 부분 주석 해제 후 배포(중간)
 - spring.datasource.schema=classpath:import.sql 부분 주석 처리 후 배포(마지막)
 - postgreSQL 에서 시퀸스 posts_id_seq 20으로 수정. simple_users_id_seq 2로 수정. (더미데이터 입력 후 라서, mysql 일때는 필요 없음.)
+- 빌드툴버전: 그래들4.10.2 -> 6.7.1(오픈자바8), 스프링부트버전: 2.1.7 -> 2.4.9
+- 위 버전 마이그레이션 기술 참조: https://jojoldu.tistory.com/539
+- 위 빌드버전 수정 후 build.gradle 에서 코끼리 클릭으로 업데이트 처리
 
 ### 20210819(목) 작업.
 - h2 데이터에비스에 추가로 postgresql 도 지원가능하게 추가.
