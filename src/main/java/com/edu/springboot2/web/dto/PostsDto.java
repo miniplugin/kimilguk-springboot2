@@ -27,15 +27,16 @@ public class PostsDto {
         this.fileId = entity.getFileId();
         this.modifiedDate = entity.getModifiedDate();
     }
-    //저장,수정
+    //수정 및 임시저장
     @Builder
-    public PostsDto(String title, String content, String author, Long fileId){
+    public PostsDto(Long id, String title, String content, String author, Long fileId){
+        this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.fileId = fileId;
     }
-
+    //DB 신규 저장
     public Posts toEntity(){
         return Posts.builder()
                 .title(title)
@@ -45,4 +46,15 @@ public class PostsDto {
                 .build();
     }
 
+    @Override
+    public String toString() {
+        return "PostsDto{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", author='" + author + '\'' +
+                ", fileId=" + fileId +
+                ", modifiedDate=" + modifiedDate +
+                '}';
+    }
 }

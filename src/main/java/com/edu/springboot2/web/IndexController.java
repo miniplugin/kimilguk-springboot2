@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -91,7 +92,7 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String index(@ModelAttribute(value="page")String page, HttpServletRequest request, String search_type, @RequestParam(value="keyword", defaultValue = "")String keyword, @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model, @LoginUser SessionUser user){ //, Principal principal, HttpSession httpSession
+    public String index(@RequestParam(value = "page",required=false,defaultValue="0")Integer page, HttpServletRequest request, String search_type, @RequestParam(value="keyword", defaultValue = "")String keyword, @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model, @LoginUser SessionUser user){ //, Principal principal, HttpSession httpSession
         //model.addAttribute("posts", postsService.findAllDesc());//페이지 사용않할 때
         //if(keyword == null) { keyword = ""; }//@RequestParam defaultValue 처리
         String sessionKeyword = (String) request.getSession().getAttribute("sessionKeyword");
@@ -120,6 +121,14 @@ public class IndexController {
         }
         */
         model.addAttribute("pageIndex", pageable.getPageSize());
+        model.addAttribute("page", page);
+
+        List<PostsDto> postsList = postsService.getPostsList(sessionKeyword, page);
+        Integer[] pageList = postsService.getPageList(page);
+        model.addAttribute("postsList", postsList);
+        model.addAttribute("pageList", pageList);
+        logger.info(postsList.toString() + "디버그19 " + postsList.size());
+        logger.info(pageList.toString() + "디버그19 " + pageList.length);
 
         if(user != null){
             logger.info("디버그22 " + user.getName());

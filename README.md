@@ -51,8 +51,13 @@
 ### OAuth2 로그인에 영향을 주는 파일 6개
 - UserRepository > CustomOAuth2UserService(외부 API 리턴값 발생 후 세션 DB 저장) > OAuthAttributes > LoginUserArgumentResolver > SessionUser > Users(엔티티)
 
-### 20210821(토) 작업예정.
+### 20210822(일) 작업.
+- 페이징 자바쪽 좀더 복잡한 로직 처리. PostsService.java -> PostPageService.java 로 분리
+- 머스태치 뷰단 기존 간단한 적용도 보존 하면서 그 아래 신규 페이징 뷰단 추가
+
+### 20210821(토) 작업.
 - 페이징 처리 다른 방법 적용(좀더 복잡): https://victorydntmd.tistory.com/333
+- 페이징 자바쪽 좀더 복잡한 로직 처리. PostsService.java 
 
 ### 20210820(금) 작업.
 - 헤로쿠에 postgreSQL DB 생성 후 연동시키기, application-db-heroku.properties 추가.
