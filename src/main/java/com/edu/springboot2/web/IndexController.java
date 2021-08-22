@@ -6,6 +6,7 @@ import com.edu.springboot2.domain.posts.Posts;
 import com.edu.springboot2.domain.simple_users.SimpleUsers;
 import com.edu.springboot2.domain.simple_users.SimpleUsersRepository;
 import com.edu.springboot2.service.posts.FileService;
+import com.edu.springboot2.service.posts.PostsPageService;
 import com.edu.springboot2.service.posts.PostsService;
 import com.edu.springboot2.service.simple_users.SimpleUsersService;
 import com.edu.springboot2.util.ScriptUtils;
@@ -36,6 +37,7 @@ public class IndexController {
     private final SimpleUsersService simpleUsersService;
     private final SimpleUsersRepository simpleUsersRepository;
     private final FileService fileService;
+    private final PostsPageService postsPageService;
 
     @PostMapping("/mypage/signout")
     public String simpleUsersDeletePost(HttpServletResponse response,SimpleUsersDto simpleUsersDto, Model model, @LoginUser SessionUser user) throws Exception {
@@ -114,21 +116,23 @@ public class IndexController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("prevCheck", searchList.hasPrevious());
         model.addAttribute("nextCheck", searchList.hasNext());
-        /*
-        ArrayList pageIndex = new ArrayList();
-        for(int i=0; i<pageable.getPageSize()-1; i++) {
-            pageIndex.add(i);
-        }
-        */
-        model.addAttribute("pageIndex", pageable.getPageSize());
+
+        model.addAttribute("pageIndex", searchList.getTotalPages());
+
         model.addAttribute("page", page);
 
-        List<PostsDto> postsList = postsService.getPostsList(sessionKeyword, page);
-        Integer[] pageList = postsService.getPageList(page);
+        Page<Posts> postsList = postsPageService.getPostsList(sessionKeyword, page);
+        Integer[] pageList = postsPageService.getPageList(postsList.getTotalElements(), postsList.getTotalPages(), page);
+
+        ArrayList pageNumbers = new ArrayList();
+        logger.info("pageList 여기1 " + pageList.length);
+        for(Integer pageNum:pageList) {
+            logger.info("pageList 여기2 " + pageNum);
+            pageNumbers.add(pageNum);
+        }
+        logger.info(pageList[0] + "pageList " + pageList[1]);
         model.addAttribute("postsList", postsList);
-        model.addAttribute("pageList", pageList);
-        logger.info(postsList.toString() + "디버그19 " + postsList.size());
-        logger.info(pageList.toString() + "디버그19 " + pageList.length);
+        model.addAttribute("pageList", pageNumbers);
 
         if(user != null){
             logger.info("디버그22 " + user.getName());

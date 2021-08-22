@@ -1,10 +1,10 @@
 {{>layout/header}}
 <script>
 $(document).ready(function() {
-    var pageSize = {{pageIndex}};
+    var totalPageSize = {{pageIndex}};
     var currPage = {{page}} + 0;
-    $("#page_numbers").text(currPage+1 + " 페이지 / 전체 " + pageSize);
-    for(var i = 0; i < pageSize; i++){
+    $("#page_numbers").text(currPage+1 + " 페이지 / 전체 " + totalPageSize);
+    for(var i = 0; i < totalPageSize; i++){
         $("#page_list").append("<option value='"+i+"'>"+(i+1)+"</option>");
     }
     $("#page_list").on("change", function(){
@@ -13,6 +13,22 @@ $(document).ready(function() {
         window.location.href = '?page='+v;
     });
     $("#page_list option:eq("+currPage+")").prop('selected', true); // option 3번째 선택
+    // 제대로 페이징 처리하기 시작
+    var pageList = {{pageList}};
+    //alert(pageList.length);
+    var disabled = "";
+    if(pageList[0] > 0) {
+        $("#pagination2").append('<li class="page-item"><a class="page-link" href="?page='+(pageList[0]-1)+'">이전</a></li>');
+    }
+    var i = 0;
+    for(i = 0; i < pageList.length; i++){
+        if(pageList[i] == null) { break; }
+        if(currPage == pageList[i]) { disabled = "active";} else { disabled = ""; }
+        $("#pagination2").append('<li class="page-item '+disabled+'"><a class="page-link" href="?page='+pageList[i]+'">'+(pageList[i]+1)+'</a></li>');
+    }
+    if(totalPageSize != (pageList[i-1]+1)) {
+        $("#pagination2").append('<li class="page-item"><a class="page-link" href="?page='+(pageList[i-1]+1)+'">다음</a></li>');
+    }
 });
 </script>
     <div class="col-md-12">
@@ -109,5 +125,8 @@ $(document).ready(function() {
         {{^nextCheck}}
             <li class="page-item disabled"><a class="page-link" href="?page={{next}}">Next</a></li>
         {{/nextCheck}}
+    </ul>
+    <ul class="pagination justify-content-center" id="pagination2">
+
     </ul>
 {{>layout/footer}}

@@ -53,7 +53,8 @@
 
 ### 20210822(일) 작업.
 - 페이징 자바쪽 좀더 복잡한 로직 처리. PostsService.java -> PostPageService.java 로 분리
-- 머스태치 뷰단 기존 간단한 적용도 보존 하면서 그 아래 신규 페이징 뷰단 추가
+- 제대로 페이징 작업 참고: https://matchless.tistory.com/31
+- 머스태치 뷰단 기존 간단한 적용도 보존 하면서 그 아래 신규 페이징 뷰단 추가 OK.
 
 ### 20210821(토) 작업.
 - 페이징 처리 다른 방법 적용(좀더 복잡): https://victorydntmd.tistory.com/333
