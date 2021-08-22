@@ -51,6 +51,9 @@
 ### OAuth2 로그인에 영향을 주는 파일 6개
 - UserRepository > CustomOAuth2UserService(외부 API 리턴값 발생 후 세션 DB 저장) > OAuthAttributes > LoginUserArgumentResolver > SessionUser > Users(엔티티)
 
+### 20210823(월) 작업예정.
+- 본인 작성한 글만 수정/삭제 가능, 관리자는 모두 가능 처리예정.
+
 ### 20210822(일) 작업.
 - 페이징 자바쪽 좀더 복잡한 로직 처리. PostsService.java -> PostPageService.java 로 분리
 - 제대로 페이징 작업 참고: https://matchless.tistory.com/31

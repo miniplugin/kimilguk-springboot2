@@ -2,20 +2,14 @@ package com.edu.springboot2.service.posts;
 
 import com.edu.springboot2.domain.posts.Posts;
 import com.edu.springboot2.domain.posts.PostsRepository;
-import com.edu.springboot2.web.dto.PostsDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 @RequiredArgsConstructor
 @Service
