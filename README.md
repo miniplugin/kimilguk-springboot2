@@ -53,7 +53,8 @@
 - UserRepository > CustomOAuth2UserService(외부 API 리턴값 발생 후 세션 DB 저장) > OAuthAttributes > LoginUserArgumentResolver > SessionUser > Users(엔티티)
 
 ### 20210824(화) 작업예정.
-- 댓글 게시판과 엔티티로 부모-자식 관계 설정 및 Ajax + RestApi로 구현.
+- 댓글 게시판과 엔티티로 부모-자식 관계 설정 및 Ajax + RestApi 로 구현.
+- 기술참조: https://wordbe.tistory.com/entry/Spring-Data-JPA-Entity-%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91
 
 ### 20210823(월) 작업.
 - 본인 작성한 글만 수정/삭제 가능, 관리자는 모두 가능 처리.
