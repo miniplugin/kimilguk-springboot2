@@ -6,6 +6,7 @@
 - https://stackoverflow.com/questions/28142361/change-remote-repository-credentials-authentication-on-intellij-idea-14
 - 헤로쿠용 빌드 파일 고정함. version '1.0.3-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss") 수정.
 - 유튜브 기술 참조: https://www.youtube.com/playlist?list=PLqaSEyuwXkSppQAjwjXZgKkjWbFoUdNXC
+- 작업기간: 20일 ( 20210730 ~ 20210823 )
 
 ### 학습목차
 - [들어가며](./README/00.md)
@@ -51,8 +52,8 @@
 ### OAuth2 로그인에 영향을 주는 파일 6개
 - UserRepository > CustomOAuth2UserService(외부 API 리턴값 발생 후 세션 DB 저장) > OAuthAttributes > LoginUserArgumentResolver > SessionUser > Users(엔티티)
 
-### 20210823(월) 작업예정.
-- 본인 작성한 글만 수정/삭제 가능, 관리자는 모두 가능 처리예정.
+### 20210823(월) 작업.
+- 본인 작성한 글만 수정/삭제 가능, 관리자는 모두 가능 처리.
 
 ### 20210822(일) 작업.
 - 페이징 자바쪽 좀더 복잡한 로직 처리. PostsService.java -> PostPageService.java 로 분리

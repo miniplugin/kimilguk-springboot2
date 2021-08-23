@@ -26,7 +26,7 @@ $(document).ready(function() {
         if(currPage == pageList[i]) { disabled = "active";} else { disabled = ""; }
         $("#pagination2").append('<li class="page-item '+disabled+'"><a class="page-link" href="?page='+pageList[i]+'">'+(pageList[i]+1)+'</a></li>');
     }
-    if(totalPageSize != (pageList[i-1]+1)) {
+    if(pageList[0] != null && totalPageSize != (pageList[i-1]+1)) {
         $("#pagination2").append('<li class="page-item"><a class="page-link" href="?page='+(pageList[i-1]+1)+'">다음</a></li>');
     }
 });

@@ -46,6 +46,10 @@ public class PostsPageService {
                 logger.info("여기!1 " + blockLastPageNumTmp);
             }
         }
+        //제일 마지막 페이지가 블럭번호 보다 작을때
+        if (totalLastPageNum < BLOCK_PAGE_NUM_COUNT) {
+            blockLastPageNum = totalLastPageNum;
+        }
         // 페이지 번호 할당
         for (int val = startPageNum, idx = 0; idx < blockLastPageNum; val++, idx++) {
             pageList[idx] = val;

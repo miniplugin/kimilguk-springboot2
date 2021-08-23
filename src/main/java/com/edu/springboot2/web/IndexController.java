@@ -126,9 +126,15 @@ public class IndexController {
 
         ArrayList pageNumbers = new ArrayList();
         logger.info("pageList 여기1 " + pageList.length);
-        for(Integer pageNum:pageList) {
-            logger.info("pageList 여기2 " + pageNum);
-            pageNumbers.add(pageNum);
+        if(!postsList.isEmpty()) {
+            for (Integer pageNum : pageList) {
+                logger.info("pageList 여기2 " + pageNum);
+                pageNumbers.add(pageNum);
+            }
+        } else {
+            for (Integer pageNum : pageList) {
+                pageNumbers.add(null);
+            }
         }
         logger.info(pageList[0] + "pageList " + pageList[1]);
         model.addAttribute("postsList", postsList);
@@ -171,7 +177,7 @@ public class IndexController {
     }
 
     @GetMapping("/posts/update/{id}")
-    public String postsUpdate(@PathVariable Long id, Model model, @LoginUser SessionUser user){
+    public String postsUpdate(HttpServletResponse response, @PathVariable Long id, Model model, @LoginUser SessionUser user) throws Exception {
 
         PostsDto dto = postsService.findById(id);
         model.addAttribute("post",dto);
@@ -182,6 +188,9 @@ public class IndexController {
         if(user != null){
             logger.info("네이버 API 로그인사용자명 또는 세션 발생 후 사용자명 " + ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
             model.addAttribute("sessionRoleAdmin", ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
+        }
+        if( !user.getName().equals(dto.getAuthor()) && !"ROLE_ADMIN".equals(user.getRole()) ) {
+            ScriptUtils.alertAndBackPage(response, "본인 글만 수정 가능합니다.");
         }
         return "posts/posts-update";
     }
