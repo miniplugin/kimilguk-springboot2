@@ -2,7 +2,7 @@
 
 <h2>게시글 수정</h2>
 <div class="col-md-12">
-    <form name="form_posts" id="form_posts">
+    <form name="form_posts" id="form_posts" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">글 번</label>
             <input type="text" class="form-control" id="id" value="{{post.id}}" readonly>
@@ -20,7 +20,7 @@
             <textarea class="form-control" id="content">{{post.content}}</textarea>
         </div>
         <div class="form-group">
-            <label for="inputFile">첨부 파일</label>
+            <label for="inputFile">단일 첨부 파일</label>
             <div class="col-sm-10">
                 <div class="custom-file" id="inputFile">
                     <input name="file" type="file" class="custom-file-input" id="customFile">
@@ -29,12 +29,29 @@
             </div>
             {{#post.fileId}}
                 <a href="/api/file_download/{{post.fileId}}">{{OrigFilename}}</a>
-                <button type="button" class="btn btn-danger" id="btn-delete-file_one">파일삭제</button>
+                <button type="button" class="btn btn-danger" id="btn-delete-file">파일삭제</button>
                 <input type="hidden" name="file_id" id="file_id" value="{{post.fileId}}">
             {{/post.fileId}}
             {{^post.fileId}}
                 <input type="hidden" name="file_id" id="file_id" value="">
             {{/post.fileId}}
+        </div>
+        <div class="form-group">
+            <label for="inputFile">멀티 첨부 파일</label>
+            <div class="col-sm-10">
+                <div class="custom-file" id="inputFile">
+                    <input name="many_file" type="file" class="custom-file-input" id="manyFile">
+                    <label class="custom-file-label" for="manyFile">파일을 선택해 주세요.</label>
+                </div>
+            </div>
+            {{#fileId}}
+                <a href="/api/many_file_download/{{fileId}}">{{OrigFilename}}</a>
+                <button type="button" class="btn btn-danger" id="btn-delete-many-file">파일삭제</button>
+                <input type="hidden" name="file_id" id="many_file_id" value="{{fileId}}">
+            {{/fileId}}
+            {{^fileId}}
+                <input type="hidden" name="file_id" id="many_file_id" value="">
+            {{/fileId}}
         </div>
     </form>
     <a href="/" role="button" class="btn btn-secondary">취소</a>
@@ -42,7 +59,13 @@
     <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
 </div>
 <script>
-$(".custom-file-input").on("change", function() {
+$("#customFile").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
+<script>
+$("#manyFile").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });

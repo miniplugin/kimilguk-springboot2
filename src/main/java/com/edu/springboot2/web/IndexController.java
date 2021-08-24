@@ -6,11 +6,13 @@ import com.edu.springboot2.domain.posts.Posts;
 import com.edu.springboot2.domain.simple_users.SimpleUsers;
 import com.edu.springboot2.domain.simple_users.SimpleUsersRepository;
 import com.edu.springboot2.service.posts.FileService;
+import com.edu.springboot2.service.posts.ManyFileService;
 import com.edu.springboot2.service.posts.PostsPageService;
 import com.edu.springboot2.service.posts.PostsService;
 import com.edu.springboot2.service.simple_users.SimpleUsersService;
 import com.edu.springboot2.util.ScriptUtils;
 import com.edu.springboot2.web.dto.FileDto;
+import com.edu.springboot2.web.dto.ManyFileDto;
 import com.edu.springboot2.web.dto.PostsDto;
 import com.edu.springboot2.web.dto.SimpleUsersDto;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +40,7 @@ public class IndexController {
     private final SimpleUsersRepository simpleUsersRepository;
     private final FileService fileService;
     private final PostsPageService postsPageService;
+    private final ManyFileService manyFileService;
 
     @PostMapping("/mypage/signout")
     public String simpleUsersDeletePost(HttpServletResponse response,SimpleUsersDto simpleUsersDto, Model model, @LoginUser SessionUser user) throws Exception {
@@ -173,6 +176,12 @@ public class IndexController {
             FileDto fileDto = fileService.getFile(dto.getFileId());
             model.addAttribute("OrigFilename", fileDto.getOrigFilename());
         }
+        //다중 파일 시작
+        ManyFileDto manyFileDto = manyFileService.getManyFile(id);
+        if(manyFileDto != null) {
+            model.addAttribute("fileId", manyFileDto.getId());
+            model.addAttribute("OrigFilename", manyFileDto.getOrigFilename());
+        }
         return "posts/posts-read";
     }
 
@@ -184,6 +193,13 @@ public class IndexController {
         if(dto.getFileId() != null) {
             FileDto fileDto = fileService.getFile(dto.getFileId());
             model.addAttribute("OrigFilename", fileDto.getOrigFilename());
+        }
+        //다중 파일 시작
+        ManyFileDto manyFileDto = manyFileService.getManyFile(id);
+        logger.info("디버그 manyFileDto " + manyFileDto);
+        if(manyFileDto != null) {
+            model.addAttribute("fileId", manyFileDto.getId());
+            model.addAttribute("OrigFilename", manyFileDto.getOrigFilename());
         }
         if(user != null){
             logger.info("네이버 API 로그인사용자명 또는 세션 발생 후 사용자명 " + ("ROLE_ADMIN".equals(user.getRole())?"admin":null));
