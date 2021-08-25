@@ -1,5 +1,6 @@
 INSERT INTO SIMPLE_USERS VALUES (1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true, '$2a$12$gZ.yvR4/mbCM6ev5L88NOeCh3VeH07K3c5kErn02NwrlsCRyX6fMi', 'ADMIN', 'admin')
 INSERT INTO SIMPLE_USERS VALUES (2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true, '$2a$12$gZ.yvR4/mbCM6ev5L88NOeCh3VeH07K3c5kErn02NwrlsCRyX6fMi', 'USER', 'user')
+ALTER SEQUENCE simple_users_id_seq restart with 2
 insert into posts values (1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'user', 'user 으로 글등록1', null, 'user 으로 글등록1')
 insert into posts values (2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'user', 'user 으로 글등록2', null, 'user 으로 글등록2')
 insert into posts values (3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'user', 'user 으로 글등록3', null, 'user 으로 글등록3')
@@ -41,3 +42,4 @@ insert into posts values (38, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'admin', 'ad
 insert into posts values (39, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'admin', 'admin 으로 글등록39', null, 'admin 으로 글등록39')
 insert into posts values (40, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'admin', 'admin 으로 글등록40', null, 'admin 으로 글등록40')
 insert into posts values (41, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'admin', 'admin 으로 추가글41', null, 'admin 으로 추가글41')
+ALTER SEQUENCE posts_id_seq restart with 41;
