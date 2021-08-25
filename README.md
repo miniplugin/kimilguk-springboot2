@@ -52,11 +52,15 @@
 ### OAuth2 로그인에 영향을 주는 파일 6개
 - UserRepository > CustomOAuth2UserService(외부 API 리턴값 발생 후 세션 DB 저장) > OAuthAttributes > LoginUserArgumentResolver > SessionUser > Users(엔티티)
 
-### 20210826(목) 스프링 레거시 마이그레이션1
+### 20210827(금) 스프링 레거시 마이그레이션1 예정
 - 신규 프로젝트 springboot-kimilguk 으로 생성.
+
+### 20210826(목) 엔티티관계3 예정
+- 다중 첨부파일에서 파일 개수 2개로 수정.
 
 ### 20210825(수) 엔티티관계2.
 - postgreSQL 데이터페이스에서도 엔티티 관계 작동되는지 확인
+- JPQL(Java Persistence Query Language) : 
 - 단일 첨부파일에서 다중 첨부파일로 수정.
 - static 디자인 index.html 실행 확인.
 
