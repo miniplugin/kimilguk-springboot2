@@ -2,6 +2,7 @@ package com.edu.springboot2.web;
 
 import com.edu.springboot2.config.auth.LoginUser;
 import com.edu.springboot2.config.auth.dto.SessionUser;
+import com.edu.springboot2.domain.posts.ManyFile;
 import com.edu.springboot2.domain.posts.Posts;
 import com.edu.springboot2.domain.simple_users.SimpleUsers;
 import com.edu.springboot2.domain.simple_users.SimpleUsersRepository;
@@ -177,10 +178,9 @@ public class IndexController {
             model.addAttribute("OrigFilename", fileDto.getOrigFilename());
         }
         //다중 파일 시작
-        ManyFileDto manyFileDto = manyFileService.getManyFile(id);
-        if(manyFileDto != null) {
-            model.addAttribute("fileId", manyFileDto.getId());
-            model.addAttribute("OrigFilename", manyFileDto.getOrigFilename());
+        List<ManyFile> manyFileList = manyFileService.getManyFile(id);
+        if(manyFileList.size() > 0) {
+            model.addAttribute("manyFileList", manyFileList);
         }
         return "posts/posts-read";
     }
@@ -195,11 +195,9 @@ public class IndexController {
             model.addAttribute("OrigFilename", fileDto.getOrigFilename());
         }
         //다중 파일 시작
-        ManyFileDto manyFileDto = manyFileService.getManyFile(id);
-        logger.info("디버그 manyFileDto " + manyFileDto);
-        if(manyFileDto != null) {
-            model.addAttribute("fileId", manyFileDto.getId());
-            model.addAttribute("OrigFilename", manyFileDto.getOrigFilename());
+        List<ManyFile> manyFileList = manyFileService.getManyFile(id);
+        if(manyFileList.size() > 0) {
+            model.addAttribute("manyFileList", manyFileList);
         }
         if(user != null){
             logger.info("네이버 API 로그인사용자명 또는 세션 발생 후 사용자명 " + ("ROLE_ADMIN".equals(user.getRole())?"admin":null));

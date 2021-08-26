@@ -53,9 +53,12 @@
 - UserRepository > CustomOAuth2UserService(외부 API 리턴값 발생 후 세션 DB 저장) > OAuthAttributes > LoginUserArgumentResolver > SessionUser > Users(엔티티)
 
 ### 20210827(금) 스프링 레거시 마이그레이션1 예정
+- 다중 첨부파일에서 파일 개수 2개로 수정 마무리.
+- $(".file_id").children("input[name='file_id']:first").val();//first 를 숫자로 변경
+- $(".file_id").children("input[name='file_id']:last").val();//last 를 숫자로 변경
 - 신규 프로젝트 springboot-kimilguk 으로 생성.
 
-### 20210826(목) 엔티티관계3 예정
+### 20210826(목) 엔티티관계3
 - 다중 첨부파일에서 파일 개수 2개로 수정.
 
 ### 20210825(수) 엔티티관계2.

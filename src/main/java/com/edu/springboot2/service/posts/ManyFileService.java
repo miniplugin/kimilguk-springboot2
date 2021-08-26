@@ -6,6 +6,8 @@ import com.edu.springboot2.web.dto.ManyFileDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ManyFileService {
     private ManyFileRepository fileRepository;
@@ -39,16 +41,8 @@ public class ManyFileService {
     }
 
     @Transactional
-    public ManyFileDto getManyFile(Long post_id) {
-        ManyFile file = fileRepository.fileAllDesc(post_id);
-        if(file == null) { return null; }
-        ManyFileDto fileDto = ManyFileDto.builder()
-                .id(file.getId())
-                .origFilename(file.getOrigFilename())
-                .filename(file.getFilename())
-                .filePath(file.getFilePath())
-                .posts(file.getPosts())
-                .build();
-        return fileDto;
+    public List<ManyFile> getManyFile(Long post_id) {
+        List<ManyFile> fileList = fileRepository.fileAllDesc(post_id);
+        return fileList;
     }
 }

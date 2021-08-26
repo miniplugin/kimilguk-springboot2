@@ -44,16 +44,22 @@
                 </div>
             </div>
         </div>
+        <input name="file_id" id="file_id" type="hidden" class="form-control">
         <div class="form-group">
             <label for="inputFile">다중 첨부 파일</label>
             <div class="col-sm-10">
                 <div class="custom-file" id="inputFile">
-                    <input name="many_file" type="file" class="custom-file-input" id="manyFile">
-                    <label class="custom-file-label" for="manyFile">파일을 선택해 주세요.</label>
+                    <input name="many_file" type="file" class="custom-file-input many_file">
+                    <label class="custom-file-label">파일을 선택해 주세요.</label>
+                </div>
+            </div>
+            <div class="col-sm-10">
+                <div class="custom-file" id="inputFile">
+                    <input name="many_file" type="file" class="custom-file-input many_file">
+                    <label class="custom-file-label">파일을 선택해 주세요.</label>
                 </div>
             </div>
         </div>
-        <input name="file_id" id="file_id" type="hidden" class="form-control">
     </form>
     <a href="/" role="button" class="btn btn-secondary">취소</a>
     <button type="button" class="btn btn-primary" id="btn-save">등록</button>
@@ -68,7 +74,7 @@ $("#customFile").on("change", function() {
 });
 </script>
 <script>
-$("#manyFile").on("change", function() {
+$(".many_file").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });

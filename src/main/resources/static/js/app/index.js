@@ -1,8 +1,9 @@
 var main = {
     init : function () {
         var _this = this;
-        $('#btn-delete-many-file').on('click', function(){
-            _this.deleteManyFile();
+        $('.btn-delete-many-file').on('click', function(){
+            var fileId = $(this).siblings('input').val();
+            _this.deleteManyFile(fileId);
             location.reload(true);
         })
         $('#btn-delete-file').on('click', function(){
@@ -19,8 +20,7 @@ var main = {
             _this.delete();
         })
     },
-    deleteManyFile : function() {
-        var fileId = $('#many_file_id').val();
+    deleteManyFile : function(fileId) {
         $.ajax({
             async: false,//게시물 등록시 첨부파일은 비동기에서 동기로 바꿔야지만, 업로드 후 게시물이 저장됩니다.
             type: 'DELETE',
@@ -29,17 +29,25 @@ var main = {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
         }).done(function(result){
-            $("#many_file_id").val("");
             alert('첨부파일 삭제 성공 ' +  result.success);
         }).fail(function(error){
             alert('첨부파일 삭제 실패 ' + JSON.stringify(error));
         });
     },
-    saveManyFile : function(post_id) {
+    saveManyFile : function(post_id, fileSun) {
         var _this = this;
         var form = $('#form_posts')[0];
-        var formData = new FormData(form);
+        var formData = new FormData();//(form)
         formData.append('post_id', post_id);
+        //formData.append("textInput",$('#textInput').val());    //text 타입 선택
+        if(fileSun == "fileSun1") {
+            formData.append("many_file",$("input[name=many_file]")[0].files[0]);  //file 타입 선택
+        }
+        if(fileSun == "fileSun2") {
+            formData.append("many_file",$("input[name=many_file]")[1].files[0]);  //file 타입 선택
+        }
+        //파일이 여러개 일때 다른 방법(아래)
+        //"manyFile[]"와 같이 "[]"를 붙여 배열타입으로 받을 수 있도록 한다.
         $.ajax({
             async: false,//게시물 등록시 첨부파일은 비동기에서 동기로 바꿔야지만, 업로드 후 게시물이 저장됩니다.
             type: "POST",
@@ -60,12 +68,10 @@ var main = {
                 $('.wrap-loading').removeClass('display-none');
             },
             success: function (result) {
-                alert("첨부파일 OK : " + result);
-                $("#many_file_id").val(result);
+                alert("첨부파일 OK : " + result);//점부파일 PK 값
             },
             //complete: _this.save,
             error: function (e) {
-                $("#many_file_id").val("");
                 console.log("ERROR : ", e);
                 alert("첨부파일 업로드가 실패했습니다.");
                 return;
@@ -150,9 +156,11 @@ var main = {
             */
             data: JSON.stringify(data)
         }).done(function(result){
-            if($("#manyFile").val() != "") {
-                //alert($('#many_file_id').val());
-                _this.saveManyFile(result);
+            if($("input[name='many_file']")[0].files.length > 0) {
+                _this.saveManyFile(result, "fileSun1");
+            }
+            if($("input[name='many_file']")[1].files.length > 0) {
+                _this.saveManyFile(result, "fileSun2");
             }
             alert('글이 등록되었습니다.' + result);
             window.location.href = "/";
@@ -169,11 +177,22 @@ var main = {
             }
             _this.saveFile();
         }
-        if($("#manyFile").val() != "") {
-            if($("#many_file_id").val() != "") {// && $("#file_id").val() != undefined) {
-                _this.deleteManyFile();
+        var uploadedCount = $(".file_id").children("input[name='file_id']").length
+        if($("input[name=many_file]")[0].files.length > 0) {
+            var fileId =  $(".file_id").children("input[name='file_id']:first").val();
+            alert("1여기 " + uploadedCount);
+            if(typeof fileId != "undefined" && uploadedCount >= 1) {
+                _this.deleteManyFile(fileId);
             }
-            _this.saveManyFile(id);
+            _this.saveManyFile(id, "fileSun1");
+        }
+        if($("input[name=many_file]")[1].files.length > 0) {
+            var fileId =  $(".file_id").children("input[name='file_id']:last").val();
+            alert("2여기 " + uploadedCount);
+            if(typeof fileId != "undefined" && uploadedCount >= 2) {
+                _this.deleteManyFile(fileId);
+            }
+            _this.saveManyFile(id, "fileSun2");
         }
         var data = {
             title: $('#title').val(),
@@ -202,8 +221,14 @@ var main = {
         if($("#file_id").val() != "") {// && $("#file_id").val() != undefined) {
             _this.deleteFile();
         }
-        if($("#many_file_id").val() != "") {// && $("#file_id").val() != undefined) {
-            _this.deleteManyFile();
+        var uploadedCount = $(".file_id").children("input[name='file_id']").length
+        var fileId =  $(".file_id").children("input[name='file_id']:first").val();
+        if(typeof fileId != "undefined" && uploadedCount >= 1) {
+             _this.deleteManyFile(fileId);
+        }
+        var fileId =  $(".file_id").children("input[name='file_id']:last").val();
+        if(typeof fileId != "undefined" && uploadedCount >= 2) {
+             _this.deleteManyFile(fileId);
         }
         var id = $('#id').val();
         $.ajax({
