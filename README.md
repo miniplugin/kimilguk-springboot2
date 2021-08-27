@@ -95,7 +95,7 @@
 ### 20210820(금) 작업.
 - 헤로쿠에 postgreSQL DB 생성 후 연동시키기, application-db-heroku.properties 추가.
 - application.db-postgres.properties 설정파일에서 초기 더미값 입력 후 업데이트만 적용 시키기 (깃 소스를 2번 배포) 아래
-- #spring.jpa.hibernate.ddl-auto=create-drop 고정
+- #spring.jpa.hibernate.ddl-auto=create-drop 고정(수정할 팰요 없음)
 - spring.jpa.hibernate.ddl-auto=update 고정
 - spring.datasource.schema=classpath:import.sql 부분 주석 처리 후 배포(초기:JPA 엔티티로 테이블 자동 생성)
 - spring.datasource.schema=classpath:import.sql 부분 주석 해제 후 배포(중간)
