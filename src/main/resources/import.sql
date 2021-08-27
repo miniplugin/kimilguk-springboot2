@@ -41,5 +41,5 @@ insert into posts values (38, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'admin', 'ad
 insert into posts values (39, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'admin', 'admin 으로 글등록39', null, 'admin 으로 글등록39')
 insert into posts values (40, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'admin', 'admin 으로 글등록40', null, 'admin 으로 글등록40')
 insert into posts values (41, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'admin', 'admin 으로 추가글41', null, 'admin 으로 추가글41')
---ALTER SEQUENCE simple_users_id_seq restart with 2
---ALTER SEQUENCE posts_id_seq restart with 41;
+ALTER SEQUENCE simple_users_id_seq restart with 2
+ALTER SEQUENCE posts_id_seq restart with 41;
