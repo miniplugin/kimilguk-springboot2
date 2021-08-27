@@ -179,15 +179,21 @@ var main = {
         }
         var uploadedCount = $(".file_id").children("input[name='file_id']").length
         if($("input[name=many_file]")[0].files.length > 0) {
-            var fileId =  $(".file_id").children("input[name='file_id']:first").val();
-            alert("1여기 " + uploadedCount);
+            //var fileId =  $(".file_id").children("input[name='file_id']:first").val();
+            var fileId = $(".file_id input[name='file_id']")
+                              .map(function(){ return $(this).val() })
+                                .get(0);
+            alert("1여기 " + fileId);
             if(typeof fileId != "undefined" && uploadedCount >= 1) {
                 _this.deleteManyFile(fileId);
             }
             _this.saveManyFile(id, "fileSun1");
         }
         if($("input[name=many_file]")[1].files.length > 0) {
-            var fileId =  $(".file_id").children("input[name='file_id']:last").val();
+            //var fileId =  $(".file_id").children("input[name='file_id']:last").val();
+             var fileId = $(".file_id input[name='file_id']")
+                              .map(function(){ return $(this).val() })
+                                .get(1);
             alert("2여기 " + uploadedCount);
             if(typeof fileId != "undefined" && uploadedCount >= 2) {
                 _this.deleteManyFile(fileId);
@@ -222,11 +228,17 @@ var main = {
             _this.deleteFile();
         }
         var uploadedCount = $(".file_id").children("input[name='file_id']").length
-        var fileId =  $(".file_id").children("input[name='file_id']:first").val();
+        //var fileId =  $(".file_id").children("input[name='file_id']:first").val();
+        var fileId = $(".file_id input[name='file_id']")
+                         .map(function(){ return $(this).val() })
+                           .get(0);
         if(typeof fileId != "undefined" && uploadedCount >= 1) {
              _this.deleteManyFile(fileId);
         }
-        var fileId =  $(".file_id").children("input[name='file_id']:last").val();
+        //var fileId =  $(".file_id").children("input[name='file_id']:last").val();
+        var fileId = $(".file_id input[name='file_id']")
+                         .map(function(){ return $(this).val() })
+                           .get(1);
         if(typeof fileId != "undefined" && uploadedCount >= 2) {
              _this.deleteManyFile(fileId);
         }
